@@ -13,7 +13,7 @@ def get_soldier_position(field):
     return found_soldier
 
 
-def right(field):
+def down(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -34,7 +34,7 @@ def right(field):
     return "move"
 
 
-def left(field):
+def up(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -55,7 +55,7 @@ def left(field):
     return "move"
 
 
-def down(field):
+def right(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -77,7 +77,7 @@ def down(field):
     return "move"
 
 
-def up(field):
+def left(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
