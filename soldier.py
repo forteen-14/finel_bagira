@@ -13,7 +13,7 @@ def get_soldier_position(field):
     return found_soldier
 
 
-def right(field, show_field):
+def right(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -27,7 +27,7 @@ def right(field, show_field):
                     if count < 6:
                         return "win"
                     else:
-                        left(field, show_field)
+                        left(field)
         else:
             return "out of bounds"
         count += 1
@@ -38,7 +38,7 @@ def right(field, show_field):
     return "move"
 
 
-def left(field, show_field):
+def left(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -50,7 +50,7 @@ def left(field, show_field):
                 if count < 6:
                     return "win"
                 else:
-                    right(field, show_field)
+                    right(field)
         else:
             return "out of bounds"
         count += 1
@@ -61,7 +61,7 @@ def left(field, show_field):
     return "move"
 
 
-def down(field, show_field):
+def down(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -73,7 +73,7 @@ def down(field, show_field):
                     if count < 6:
                         return "win"
                     else:
-                        up(field, show_field)
+                        up(field)
         else:
             return "out of bounds"
         count += 1
@@ -85,7 +85,7 @@ def down(field, show_field):
     return "move"
 
 
-def up(field, show_field):
+def up(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -97,7 +97,7 @@ def up(field, show_field):
                 if count < 6:
                     return "win"
                 else:
-                    down(field, show_field)
+                    down(field)
         else:
             return "out of bounds"
         count += 1
