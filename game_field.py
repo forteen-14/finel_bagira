@@ -30,10 +30,8 @@ def create_mines(field):
                 #mines take 3 spots in a row
                 row = random.randint(0, consts.BOARD_GRID_ROW - 1)
                 col = random.randint(0, consts.BOARD_GRID_COLS - 3)
-                if field[row][col] != consts.SOLDIER and field[row][col] != consts.FLAG and field[row][col + 1] != consts.SOLDIER and field[row][col + 1] != consts.FLAG and field[row][col + 2] != consts.SOLDIER and field[row][col + 2] != consts.FLAG:
+                if field[row][col] == consts.EMPTY and field[row][col+1] == consts.EMPTY and field[row][col+2] == consts.EMPTY:
                     field[row][col] = consts.MINE
-                    field[row][col + 1] = consts.MINE
-                    field[row][col + 2] = consts.MINE
                     break
 
 

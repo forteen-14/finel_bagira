@@ -11,9 +11,10 @@ state = {
 }
 
 
-def check_soldier_status():
+def check_soldier_status(field):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
+        game_field.print_field(field)
         print("You hit a mine")
         exit(0)
     elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
@@ -31,16 +32,16 @@ def event_handler(field):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 state["player_status"] = soldier.right(field)
-                check_soldier_status()
+                check_soldier_status(field)
             if event.key == pygame.K_LEFT:
                 state["player_status"] = soldier.left(field)
-                check_soldier_status()
+                check_soldier_status(field)
             if event.key == pygame.K_UP:
                 state["player_status"] = soldier.up(field)
-                check_soldier_status()
+                check_soldier_status(field)
             if event.key == pygame.K_DOWN:
                 state["player_status"] = soldier.down(field)
-                check_soldier_status()
+                check_soldier_status(field)
             if event.key == pygame.K_ESCAPE:
                 state["is_window_open"] = False
             elif state["state"] != consts.RUNNING_STATE:
