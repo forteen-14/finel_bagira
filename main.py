@@ -30,16 +30,16 @@ def event_handler(field):
         # Condition becomes true when keyboard is pressed
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                soldier.right(field)
+                state["player_status"] = soldier.right(field)
                 check_soldier_status()
             if event.key == pygame.K_LEFT:
-                soldier.left(field)
+                state["player_status"] = soldier.left(field)
                 check_soldier_status()
             if event.key == pygame.K_UP:
-                soldier.up(field)
+                state["player_status"] = soldier.up(field)
                 check_soldier_status()
             if event.key == pygame.K_DOWN:
-                soldier.down(field)
+                state["player_status"] = soldier.down(field)
                 check_soldier_status()
             if event.key == pygame.K_ESCAPE:
                 state["is_window_open"] = False
