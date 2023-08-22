@@ -13,12 +13,8 @@ object_pixales={"soldier": 8,
                "bush": 1,
                "mine": 3,
                "flag": 12}
-def draw_grid():
-    # Set the size of the grid block
-    for x in range(0, consts.WINDOW_WIDTH, consts.BLOCK_SIZE):
-        for y in range(0, consts.WINDOW_HEIGHT, consts.BLOCK_SIZE):
-            rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
-            pygame.draw.rect(screen, consts.BLACK, rect, 1)
+
+
 
 
 def draw_message(message, font_size, color, location):
@@ -48,7 +44,13 @@ def draw_image(name,obj_info,field):
 
                 count_pixales-=1
 
+
+def dead(field):
+    photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
+    for i in range(len(photos)):
+        draw_image("soldier",[photos[i],consts.SOLDIER_SIZE,consts.SOLDIER],field)
 def draw_lose_message():
+
     draw_message(consts.LOSE_MESSAGE, consts.LOSE_FONT_SIZE,
                  consts.LOSE_COLOR, consts.LOSE_LOCATION)
 
@@ -60,17 +62,35 @@ def draw_win_message():
 
 
 
+def x_ray():
+    # Set the size of the grid block
+    screen.fill(consts.BLACK)
+    for x in range(0, consts.WINDOW_WIDTH, consts.BLOCK_SIZE):
+        for y in range(0, consts.WINDOW_HEIGHT, consts.BLOCK_SIZE):
+            rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
+            pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
 def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
-    draw_grid()
+    def x_ray_handle():
+        x_ray()
+        time.sleep(1)
+        draw_image("mine", objects["mine"], field)
+
     if state["state"] == consts.WELCOME_STATE:
         draw_welcome()
-
+    elif state["state"] == consts.SPACE_X_RAY:
+        x_ray_handle()
+        state["state"] = consts.RUNNING_STATE
     for name,info in objects.items():
-        draw_image(name,info,field)
+        if name!="mine":
+            draw_image(name,info,field)
     if state["state"]==consts.LOSE_STATE:
+        x_ray_handle()
+        dead(field)
         draw_lose_message()
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
+
+
     pygame.display.flip()
