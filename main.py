@@ -38,6 +38,10 @@ def main():
     screen.fill(consts.DARK_GREEN)
     pygame.display.flip()
     field = game_field.create_field()
+    for i in range(consts.NUM_OF_ROWS):
+        for j in range(consts.NUM_OF_COLS):
+            print(field[i][j], end=" ")
+        print()
     event_handler()
     state["is_window_open"]
 

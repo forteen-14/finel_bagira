@@ -8,9 +8,9 @@ def create_characters(field):
     for row in range(4):
         for col in range(2):
             field[row][col] = consts.SOLDIER
-    for row in range(1,5):
-        for col in range(1,3):
-            field[row][consts.NUM_OF_COLS - col] = consts.FLAG
+    for row in range(4):
+        for col in range(3):
+            field[consts.NUM_OF_ROWS - row - 1][consts.NUM_OF_COLS - col - 1] = consts.FLAG
     #put 20 random grass spots
     for i in range(consts.GRASS_AMOUNT):
         #check if the spot is already taken ny soldier or flag
@@ -42,7 +42,7 @@ def create_mines(field):
 
 def create_field():
     # create the field 2d list
-    game_filed = [[consts.GRASS for col in range(consts.NUM_OF_COLS)] for row in range(consts.NUM_OF_ROWS)]
+    game_filed = [[consts.EMPTY for col in range(consts.NUM_OF_COLS)] for row in range(consts.NUM_OF_ROWS)]
     create_characters(game_filed)
     create_mines(game_filed)
 
