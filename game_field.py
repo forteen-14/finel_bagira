@@ -8,8 +8,8 @@ def create_characters(field):
     for row in range(4):
         for col in range(2):
             field[row][col] = consts.SOLDIER
-    for row in range(4):
-        for col in range(3):
+    for row in range(1,5):
+        for col in range(1,3):
             field[row][consts.NUM_OF_COLS - col] = consts.FLAG
     #put 20 random grass spots
     for i in range(consts.GRASS_AMOUNT):
