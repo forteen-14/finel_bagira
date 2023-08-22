@@ -1,6 +1,6 @@
 import consts
 import pygame
-
+import time
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
@@ -38,11 +38,12 @@ def draw_image(name,obj_info,field):
     img=loaded_img
     img = pygame.transform.scale(img,size)
     count_pixales=0
-    for row in range(consts.BOARD_GRID_COLS):
-        for col in range(consts.BOARD_GRID_ROW):
-            if field[col][row]==object_index:
+    for row in range(consts.BOARD_GRID_ROW):
+        for col in range(consts.BOARD_GRID_COLS):
+            if field[row][col]==object_index:
                 if count_pixales==0:
-                    screen.blit(img, (row * consts.BLOCK_SIZE, col * consts.BLOCK_SIZE))
+                    screen.blit(img, (col * consts.BLOCK_SIZE, row * consts.BLOCK_SIZE))
+
                     count_pixales=object_pixales[name]
 
                 count_pixales-=1
@@ -70,7 +71,8 @@ def draw_game(state,field):
         draw_image(name,info,field)
     if state["state"]==consts.LOSE_STATE:
         draw_lose_message()
+        time.sleep(3)
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
-
+        time.sleep(3)
     pygame.display.flip()
