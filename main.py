@@ -31,17 +31,16 @@ def event_handler():
                 elif state["state"] != consts.RUNNING_STATE:
                     continue
 
+
+def print_field(field):
+    for row in field:
+        print(row)
+
+
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((900, 600))
-    pygame.display.set_caption(consts.GAME_NAME)
-    screen.fill(consts.DARK_GREEN)
-    pygame.display.flip()
     field = game_field.create_field()
-
-    event_handler()
-    state["is_window_open"]
-
+    print_field(field)
     while state["is_window_open"]:
         event_handler()
         screen.draw_game(state)
@@ -49,7 +48,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
 
