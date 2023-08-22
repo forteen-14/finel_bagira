@@ -3,7 +3,7 @@ import consts
 import game_field
 import screen
 import soldier
-
+import time
 
 state = {
     "state": consts.WELCOME_STATE,
@@ -55,6 +55,9 @@ def main():
     while state["is_window_open"]:
         event_handler(field)
         screen.draw_game(state,field)
+        if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
+            time.sleep(3)
+            exit(0)
 
 
 if __name__ == '__main__':

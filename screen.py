@@ -71,8 +71,6 @@ def draw_game(state,field):
         draw_image(name,info,field)
     if state["state"]==consts.LOSE_STATE:
         draw_lose_message()
-        time.sleep(3)
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
-        time.sleep(3)
     pygame.display.flip()
