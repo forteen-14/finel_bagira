@@ -25,7 +25,6 @@ def create_characters(field):
 def create_mines(field):
     #put 20 random mines
     for i in range(consts.MINES_AMOUNT):
-        try:
         #check if the spot is already taken ny soldier or flag
             while True:
                 #mines take 3 spots in a row
@@ -36,8 +35,12 @@ def create_mines(field):
                     field[row][col + 1] = consts.MINE
                     field[row][col + 2] = consts.MINE
                     break
-        except:
-            pass
+
+
+
+def print_field(field):
+    for row in field:
+        print(row)
 
 
 def create_field():
