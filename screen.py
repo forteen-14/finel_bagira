@@ -34,22 +34,27 @@ def draw_welcome():
 
 
 def draw_image(name,obj_info,field):
-    loaded_img=obj_info[0]
-    size=obj_info[1]
-    object_index=obj_info[2]
+    loaded_img,size,object_index=obj_info
     img=loaded_img
     img = pygame.transform.scale(img,size)
     count_pixales=0
     for row in range(consts.BOARD_GRID_COLS):
         for col in range(consts.BOARD_GRID_ROW):
             if field[col][row]==object_index:
-
                 if count_pixales==0:
                     screen.blit(img, (row * consts.BLOCK_SIZE, col * consts.BLOCK_SIZE))
                     count_pixales=object_pixales[name]
 
-
                 count_pixales-=1
+
+def draw_lose_message():
+    draw_message(consts.LOSE_MESSAGE, consts.LOSE_FONT_SIZE,
+                 consts.LOSE_COLOR, consts.LOSE_LOCATION)
+
+
+def draw_win_message():
+    draw_message(consts.WIN_MESSAGE, consts.WIN_FONT_SIZE,
+                 consts.WIN_COLOR, consts.WIN_LOCATION)
 
 
 
@@ -63,6 +68,9 @@ def draw_game(state,field):
 
     for name,info in objects.items():
         draw_image(name,info,field)
-    
+    if state["state"]==consts.LOSE_STATE:
+        draw_lose_message()
+    elif state["state"]==consts.WIN_STATE:
+        draw_win_message()
 
     pygame.display.flip()
