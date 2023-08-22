@@ -18,12 +18,16 @@ def right(field):
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
         if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] +1 < consts.BOARD_GRID_COLS:
-            if count >= 6:
-                if field[i[0]][i[1]+1] == consts.MINE:
+            if field[i[0]][i[1]+1] == consts.MINE:
+                if count >= 6:
                     return "hit mine"
-            if count < 6:
+                else:
+                    pass
                 if field[i[0]][i[1]+1] == consts.FLAG:
-                    return "win"
+                    if count < 6:
+                        return "win"
+                    else:
+                        left(field)
         else:
             return "out of bounds"
         count += 1
@@ -42,9 +46,11 @@ def left(field):
             if count >= 6:
                 if field[i[0]-1][i[1]] == consts.MINE:
                     return "hit mine"
-            if count < 6:
-                if field[i[0]-1][i[1]] == consts.FLAG:
+            if field[i[0]-1][i[1]] == consts.FLAG:
+                if count < 6:
                     return "win"
+                else:
+                    right(field)
         else:
             return "out of bounds"
         count += 1
@@ -63,9 +69,11 @@ def down(field):
             if count >= 6:
                 if field[i[0]+1][i[1]] == consts.MINE:
                     return "hit mine"
-            if count < 6:
                 if field[i[0]+1][i[1]] == consts.FLAG:
-                    return "win"
+                    if count < 6:
+                        return "win"
+                    else:
+                        up(field)
         else:
             return "out of bounds"
         count += 1
@@ -85,9 +93,11 @@ def up(field):
             if count >= 6:
                 if field[i[0]-1][i[1]] == consts.MINE:
                     return "hit mine"
-            if count < 6:
-                if field[i[0]-1][i[1]] == consts.FLAG:
+            if field[i[0]-1][i[1]] == consts.FLAG:
+                if count < 6:
                     return "win"
+                else:
+                    down(field)
         else:
             return "out of bounds"
         count += 1
