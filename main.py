@@ -53,7 +53,7 @@ def main():
     game_field.print_field(field)
     while state["is_window_open"]:
         event_handler(field)
-        screen.draw_game(state)
+        screen.draw_game(state,field)
 
 
 if __name__ == '__main__':
