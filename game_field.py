@@ -32,6 +32,8 @@ def create_mines(field):
                 col = random.randint(0, consts.BOARD_GRID_COLS - 3)
                 if field[row][col] == consts.EMPTY and field[row][col+1] == consts.EMPTY and field[row][col+2] == consts.EMPTY:
                     field[row][col] = consts.MINE
+                    field[row][col+1] = consts.MINE
+                    field[row][col+2] = consts.MINE
                     break
 
 
