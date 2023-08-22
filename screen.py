@@ -40,10 +40,9 @@ def draw_image(name,obj_info,field):
     img=loaded_img
     img = pygame.transform.scale(img,size)
     count_pixales=0
-    for row in range(consts.BOARD_GRID_ROW):
-        for col in range(consts.BOARD_GRID_COLS):
-
-            if field[row][col]==object_index:
+    for row in range(consts.BOARD_GRID_COLS):
+        for col in range(consts.BOARD_GRID_ROW):
+            if field[col][row]==object_index:
 
                 if count_pixales==0:
                     screen.blit(img, (row * consts.BLOCK_SIZE, col * consts.BLOCK_SIZE))
