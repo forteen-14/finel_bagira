@@ -4,19 +4,19 @@ import game_field
 import screen
 import soldier
 
+
 state = {
     "state": consts.WELCOME_STATE,
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
+
 }
 
 
 def check_soldier_status(field):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
-        game_field.print_field(field)
-        print("You hit a mine")
-        exit(0)
+
     elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
         state["state"] = consts.WIN_STATE
     elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:
