@@ -10,6 +10,7 @@ state = {
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
 
+
 }
 
 
@@ -44,6 +45,9 @@ def event_handler(field):
                 check_soldier_status(field)
             if event.key == pygame.K_ESCAPE:
                 state["is_window_open"] = False
+            if event.key == pygame.K_SPACE:
+                # TO DO: add space x ray
+                state["state"] = consts.SPACE_X_RAY
             elif state["state"] != consts.RUNNING_STATE:
                 continue
 
