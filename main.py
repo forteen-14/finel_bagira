@@ -14,6 +14,8 @@ state = {
 def check_soldier_status():
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
+        print("You hit a mine")
+        exit(0)
     elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
         state["state"] = consts.WIN_STATE
     elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:

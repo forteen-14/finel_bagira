@@ -19,10 +19,10 @@ def right(field):
     for i in soldier_position:
         if 0 <= i[0] < consts.BOARD_GRID_COLS and 0 <= i[1] +1 < consts.BOARD_GRID_ROW:
             if count >= 6:
-                if field[i[0]+1][i[1]] == consts.MINE:
+                if field[i[0]][i[1]+1] == consts.MINE:
                     return "hit mine"
             if count < 6:
-                if field[i[0]+1][i[1]] == consts.FLAG:
+                if field[i[0]][i[1]+1] == consts.FLAG:
                     return "win"
         else:
             return "out of bounds"
