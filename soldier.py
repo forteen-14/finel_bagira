@@ -13,11 +13,11 @@ def get_soldier_position(field):
     return found_soldier
 
 
-def down(field):
+def right(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
-        if 0 <= i[0] < consts.BOARD_GRID_COLS and 0 <= i[1] +1 < consts.BOARD_GRID_ROW:
+        if 0 <= i[0] < consts.BOARD_GRID_COLS and 0 <= i[1] +1 < consts.BOARD_GRID_ROW - 2:
             if count >= 6:
                 if field[i[0]][i[1]+1] == consts.MINE:
                     return "hit mine"
@@ -34,7 +34,7 @@ def down(field):
     return "move"
 
 
-def up(field):
+def left(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
@@ -55,11 +55,11 @@ def up(field):
     return "move"
 
 
-def right(field):
+def down(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
-        if 0 <= i[0]+1 < consts.BOARD_GRID_COLS and 0 <= i[1] < consts.BOARD_GRID_ROW:
+        if 0 <= i[0]+1 < consts.BOARD_GRID_COLS and 0 <= i[1] < consts.BOARD_GRID_ROW +20:
             if count >= 6:
                 if field[i[0]+1][i[1]] == consts.MINE:
                     return "hit mine"
@@ -77,7 +77,7 @@ def right(field):
     return "move"
 
 
-def left(field):
+def up(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
