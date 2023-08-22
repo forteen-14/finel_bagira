@@ -5,14 +5,14 @@ import screen
 import soldier
 
 state = {
-    "State": consts.RUNNING_STATE,
+    "state": consts.WELCOME_STATE,
     "is_window_open": True,
 }
 
 
 
+
 def event_handler():
-    while state["is_window_open"]:
         # Cycles through all the events currently occuring
         for event in pygame.event.get():
 
@@ -28,18 +28,15 @@ def event_handler():
                     pass
                 if event.key == pygame.K_ESCAPE:
                     state["is_window_open"] = False
-
+                elif state["state"] != consts.RUNNING_STATE:
+                    continue
 
 def main():
-    # initialize pygame screen
     pygame.init()
-    screen = pygame.display.set_mode((900, 600))
-    pygame.display.set_caption(consts.GAME_NAME)
-    screen.fill(consts.DARK_GREEN)
-    pygame.display.flip()
-    field = game_field.create_field()
-    event_handler()
-    state["is_window_open"]
+
+    while state["is_window_open"]:
+        event_handler()
+        screen.draw_game(state)
 
 
 if __name__ == '__main__':
