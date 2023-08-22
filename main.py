@@ -4,6 +4,7 @@ import game_field
 import screen
 import soldier
 import time
+import copy
 
 state = {
     "state": consts.WELCOME_STATE,
@@ -52,13 +53,22 @@ def event_handler(field):
                 continue
 
 
+def fix_field(field, field_copy):
+    for row in range(2, len(field)):
+        for col in range(4, len(field[row])):
+            if not field[row][col] == consts.SOLDIER:
+                field[row][col] = field_copy[row][col]
+
 
 def main():
     pygame.init()
     field = game_field.create_field()
+    field_copy = game_field.create_field()
     game_field.print_field(field)
     while state["is_window_open"]:
         event_handler(field)
+        if state["state"] == consts.RUNNING_STATE:
+            fix_field(field, field_copy)
         screen.draw_game(state,field)
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(3)
