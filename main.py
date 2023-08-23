@@ -86,8 +86,10 @@ def main():
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state, field)
-        if state["is_key_load"]:
+        if state["is_key_load"]==consts.LOAD_STATE:
             DataBase.loadGame(state["what_number_pressed"])
+        elif state["is_key_load"]==consts.SAVE_STATE:
+            DataBase.SaveGame(state["what_number_pressed"],field)
 
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)

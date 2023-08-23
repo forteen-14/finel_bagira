@@ -11,7 +11,7 @@ def DataBase():
         df = pd.DataFrame(data)
     return df
 
-def SaveGameToDataBase(key_pressed,field):
+def SaveGame(key_pressed,field):
     df[str(key_pressed)]=field
 
 
