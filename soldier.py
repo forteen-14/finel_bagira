@@ -21,6 +21,8 @@ def right(field):
             if count >= 6:
                 if field[i[0]][i[1]+ 1] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
+                if field[i[0]][i[1]+1] == consts.TELEPORT:
+                    return consts.SOLDIER_TELEPORT
             if count < 6:
                 if field[i[0]][i[1]+1] == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
@@ -42,6 +44,8 @@ def left(field):
             if count >= 6:
                 if field[i[0]][i[1]-1] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
+                if field[i[0]][i[1]-1] == consts.TELEPORT:
+                    return consts.SOLDIER_TELEPORT
             if count < 6:
                 if field[i[0]-1][i[1]] == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
@@ -63,6 +67,8 @@ def down(field):
             if count >= 6:
                 if field[i[0]+1][i[1]] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
+                if field[i[0]+1][i[1]] == consts.TELEPORT:
+                    return consts.SOLDIER_TELEPORT
             if count < 6:
                 if field[i[0]+1][i[1]] == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT

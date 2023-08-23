@@ -44,6 +44,10 @@ def draw_image(obj_info,field):
     count_pixales=0
     for row in range(consts.BOARD_GRID_ROW):
         for col in range(consts.BOARD_GRID_COLS):
+            #show tp
+            if field[row][col]==5:
+                pygame.draw.rect(screen,consts.WHITE,[col*consts.BLOCK_SIZE, row*consts.BLOCK_SIZE, consts.BLOCK_SIZE, consts.BLOCK_SIZE])
+
             if field[row][col]==object_index:
                 if count_pixales==0:
                     screen.blit(img, (col * consts.BLOCK_SIZE, row * consts.BLOCK_SIZE))

@@ -6,6 +6,7 @@ import soldier
 import time
 import DataBase
 import copy
+import TP
 
 state = {
     "state": consts.WELCOME_STATE,
@@ -18,9 +19,12 @@ state = {
 }
 
 
-def check_soldier_status(field):
+def check_soldier_status(field, tp_list):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
+    elif state["player_status"] == consts.SOLDIER_TELEPORT:
+        TP.teleport_the_player(field, tp_list)
+        state["state"] = consts.RUNNING_STATE
     elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
         state["state"] = consts.WIN_STATE
     elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:
@@ -29,22 +33,22 @@ def check_soldier_status(field):
         state["state"] = consts.RUNNING_STATE
 
 
-def event_handler(field, start_count):
+def event_handler(field, start_count,tp_list):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.right(field)
-                check_soldier_status(field)
+                check_soldier_status(field,tp_list)
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.left(field)
-                check_soldier_status(field)
+                check_soldier_status(field,tp_list)
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.up(field)
-                check_soldier_status(field)
+                check_soldier_status(field,tp_list)
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.down(field)
-                check_soldier_status(field)
+                check_soldier_status(field,tp_list)
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
@@ -90,15 +94,14 @@ def main():
     field_copy = copy.deepcopy(field)
     game_field.print_field(field)
     while state["is_window_open"]:
-        start_count = event_handler(field, start_count)
+        start_count = event_handler(field, start_count,tp_list)
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state, field)
 
        # load and save ==================
         if state["is_key_load"]==consts.LOAD_STATE:
-            if DataBase.isKeyExist(state["what_number_pressed"]):
-                field,field_copy=DataBase.loadGame(state["what_number_pressed"])
+            field,field_copy=DataBase.loadGame(state["what_number_pressed"])
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             time.sleep(consts.LOAD_GAME_MSG_TIME)
@@ -112,7 +115,7 @@ def main():
 
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
-            break
+            exit(0)
 
 
 if __name__ == '__main__':

@@ -32,6 +32,7 @@ SOLDIER_MINE_HIT = "hit mine"
 SOLDIER_FLAG_HIT = "win"
 SOLDIER_OUT_OF_BOUNDS = "out of bounds"
 SOLDIER_MOVE = "move"
+SOLDIER_TELEPORT = "teleport"
 
 GRASS = 2
 EMPTY = 0
