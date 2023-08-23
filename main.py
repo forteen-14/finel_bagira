@@ -72,8 +72,10 @@ def event_handler(field, start_count):
 
 
 def fix_field(field, field_copy):
-    for row in range(2, len(field)):
-        for col in range(4, len(field[row])):
+    for row in range(len(field)):
+        for col in range(len(field[row])):
+            if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
+                continue
             if not field[row][col] == consts.SOLDIER:
                 field[row][col] = field_copy[row][col]
             if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
@@ -104,15 +106,6 @@ def main():
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             print("x save")
-
-
-        if state["is_key_load"] == consts.LOAD_STATE:
-            print("load")
-            DataBase.loadGame(state["what_number_pressed"])
-        elif state["is_key_load"] == consts.SAVE_STATE:
-            DataBase.SaveGame(state["what_number_pressed"], field)
-            print("save")
-
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
