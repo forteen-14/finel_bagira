@@ -34,19 +34,19 @@ def event_handler(field, start_count):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.right(field)
                 check_soldier_status(field)
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.left(field)
                 check_soldier_status(field)
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.up(field)
                 check_soldier_status(field)
-            if event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.down(field)
                 check_soldier_status(field)
-            if event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
                 state["state"] = consts.SPACE_X_RAY
@@ -92,13 +92,12 @@ def main():
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state, field)
-        if state["is_key_load"]==consts.LOAD_STATE:
+        if state["is_key_load"] == consts.LOAD_STATE:
             print("load")
             DataBase.loadGame(state["what_number_pressed"])
-        elif state["is_key_load"]==consts.SAVE_STATE:
-            DataBase.SaveGame(state["what_number_pressed"],field)
+        elif state["is_key_load"] == consts.SAVE_STATE:
+            DataBase.SaveGame(state["what_number_pressed"], field)
             print("save")
-
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
