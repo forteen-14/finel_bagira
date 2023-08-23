@@ -93,21 +93,22 @@ def draw_game(state,field):
         x_ray(field)
         state["state"] = consts.RUNNING_STATE
 
-    #=============================
+    #============================= states
     if state["state"] == consts.LOSE_STATE:
         x_ray(field)
         draw_dead(field)
         draw_lose_message()
     elif state["state"] == consts.WIN_STATE:
         draw_win_message()
+    elif state["state"] == consts.WELCOME_STATE:
+        draw_welcome()
+    #=============================  load and save
     if state["is_key_load"] == consts.LOAD_STATE:
         draw_load_game(state["what_number_pressed"])
-
-
     if state["is_key_load"] == consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
-    if state["state"] == consts.WELCOME_STATE:
-        draw_welcome()
+
+
 
 
 
