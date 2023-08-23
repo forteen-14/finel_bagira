@@ -9,10 +9,10 @@ objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SI
          "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE],
          "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG]
          }
-object_pixales={"soldier": 8,
-               "bush": 1,
-               "mine": 3,
-               "flag": 12}
+object_pixales={"soldier": consts.SOLDIER_PIXALES,
+               "bush": consts.BUSH_PIXALES,
+               "mine": consts.MINE_PIXALES,
+               "flag": consts.FLAG_PIXALES}
 
 
 
@@ -43,10 +43,11 @@ def draw_image(name,obj_info,field):
                 count_pixales-=1
 
 
-def dead(field):
+def draw_dead(field):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
     for i in range(len(photos)):
         draw_image("soldier",[photos[i],consts.SOLDIER_SIZE,consts.SOLDIER],field)
+
 def draw_lose_message():
 
     draw_message(consts.LOSE_MESSAGE, consts.LOSE_FONT_SIZE,
@@ -60,32 +61,30 @@ def draw_win_message():
 
 
 
-def x_ray():
+def x_ray(field):
     # Set the size of the grid block
     screen.fill(consts.BLACK)
     for x in range(0, consts.WINDOW_WIDTH, consts.BLOCK_SIZE):
         for y in range(0, consts.WINDOW_HEIGHT, consts.BLOCK_SIZE):
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
+    time.sleep(consts.X_RAY_TIME)
+    draw_image(consts.SHOW_ON_XRAY, objects[consts.SHOW_ON_XRAY], field)
+
 
 def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
-    def x_ray_handle():
-        x_ray()
-        time.sleep(consts.X_RAY_TIME)
-        draw_image(consts.SHOW_ON_XRAY, objects[consts.SHOW_ON_XRAY], field)
-
     if state["state"] == consts.WELCOME_STATE:
         draw_welcome()
     elif state["state"] == consts.SPACE_X_RAY:
-        x_ray_handle()
+        x_ray(field)
         state["state"] = consts.RUNNING_STATE
     for name,info in objects.items():
         if name!="mine":
             draw_image(name,info,field)
     if state["state"]==consts.LOSE_STATE:
-        x_ray_handle()
-        dead(field)
+        x_ray(field)
+        draw_dead(field)
         draw_lose_message()
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
