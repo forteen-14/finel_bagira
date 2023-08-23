@@ -78,17 +78,16 @@ def x_ray(field):
         for y in range(0, consts.WINDOW_HEIGHT, consts.BLOCK_SIZE):
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
-    time.sleep(consts.X_RAY_TIME)
+
     for name in x_ray_object:
-        print(name)
         draw_image(name, objects[name], field)
+    time.sleep(consts.X_RAY_TIME)
 
 
 def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
     if state["state"] == consts.WELCOME_STATE:
         draw_welcome()
-
 
     for name,info in objects.items():
         if name not in x_ray_object:
