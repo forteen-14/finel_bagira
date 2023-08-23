@@ -21,11 +21,9 @@ def right(field):
             if count >= 6:
                 if field[i[0]][i[1]+ 1] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                else:
-                    pass
+            if count < 6:
                 if field[i[0]][i[1]+1] == consts.FLAG:
-                    if count < 6:
-                        return "win"
+                    return consts.SOLDIER_FLAG_HIT
         else:
             return "out of bounds"
         count += 1
@@ -44,9 +42,9 @@ def left(field):
             if count >= 6:
                 if field[i[0]][i[1]-1] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-            if field[i[0]-1][i[1]] == consts.FLAG:
-                if count < 6:
-                    return "win"
+            if count < 6:
+                if field[i[0]-1][i[1]] == consts.FLAG:
+                    return consts.SOLDIER_FLAG_HIT
         else:
             return "out of bounds"
         count += 1
@@ -65,9 +63,9 @@ def down(field):
             if count >= 6:
                 if field[i[0]+1][i[1]] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]+1][i[1]] == consts.FLAG:
-                    if count < 6:
-                        return "win"
+                if count < 6:
+                    if field[i[0]+1][i[1]] == consts.FLAG:
+                        return consts.SOLDIER_FLAG_HIT
         else:
             return "out of bounds"
         count += 1
@@ -87,9 +85,9 @@ def up(field):
             if count >= 6:
                 if field[i[0]-1][i[1]] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-            if field[i[0]-1][i[1]] == consts.FLAG:
-                if count < 6:
-                    return "win"
+            if count < 6:
+                if field[i[0] - 1][i[1]] == consts.FLAG:
+                    return consts.SOLDIER_FLAG_HIT
         else:
             return "out of bounds"
         count += 1

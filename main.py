@@ -58,6 +58,8 @@ def fix_field(field, field_copy):
         for col in range(4, len(field[row])):
             if not field[row][col] == consts.SOLDIER:
                 field[row][col] = field_copy[row][col]
+                if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
+                    state["state"] = consts.WIN_STATE
 
 
 def main():
