@@ -11,7 +11,8 @@ state = {
     "state": consts.WELCOME_STATE,
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
-
+    "is_key_held": False,
+    "what_number_pressed": ""
 
 
 }
@@ -20,7 +21,6 @@ state = {
 def check_soldier_status(field):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
-
     elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
         state["state"] = consts.WIN_STATE
     elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:
@@ -29,11 +29,10 @@ def check_soldier_status(field):
         state["state"] = consts.RUNNING_STATE
 
 
-def event_handler(field):
+def event_handler(field, start_count):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
-        # Condition becomes true when keyboard is pressed
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 state["player_status"] = soldier.right(field)
                 check_soldier_status(field)
@@ -50,8 +49,19 @@ def event_handler(field):
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
                 state["state"] = consts.SPACE_X_RAY
+            if event.unicode.isdigit() and event.type == pygame.KEYDOWN : # if the key is a number
+                print("number pressed")
+                start_count = pygame.time.get_ticks()
+                return start_count
+            if event.type == pygame.KEYUP:
+                if event.unicode.isdigit():
+                    space_end = pygame.time.get_ticks()
+                    if space_end - start_count >= 1000:
+                        state["is_key_held"] = True
+                        state["what_number_pressed"] = event.unicode
             elif state["state"] != consts.RUNNING_STATE:
                 continue
+    return start_count
 
 
 def fix_field(field, field_copy):
@@ -64,12 +74,13 @@ def fix_field(field, field_copy):
 
 
 def main():
+    start_count = 0
     pygame.init()
     field = game_field.create_field()
     field_copy = game_field.create_field()
     game_field.print_field(field)
     while state["is_window_open"]:
-        event_handler(field)
+        start_count = event_handler(field, start_count)
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state,field)
