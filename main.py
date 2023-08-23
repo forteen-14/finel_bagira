@@ -58,13 +58,14 @@ def event_handler(field, start_count):
                 if event.unicode.isdigit():
                     space_end = pygame.time.get_ticks()
                     if space_end - start_count >= 1000:
-                        state["is_key_load"] = consts.LOAD_STATE
-                        state["what_number_pressed"] = event.unicode
-                        print("load")
-                    else:
                         state["is_key_load"] = consts.SAVE_STATE
                         state["what_number_pressed"] = event.unicode
                         print("save")
+                    else:
+                        state["is_key_load"] = consts.LOAD_STATE
+                        state["what_number_pressed"] = event.unicode
+                        print("load")
+
             elif state["state"] != consts.RUNNING_STATE:
                 continue
     return start_count
