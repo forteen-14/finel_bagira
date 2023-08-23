@@ -11,7 +11,7 @@ state = {
     "state": consts.WELCOME_STATE,
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
-    "is_key_load": False,
+    "is_key_load": consts.NEUTRAL_STATE,
     "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE
 
 
