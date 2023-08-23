@@ -47,7 +47,7 @@ def create_teleports(field,tp_list):
                 field[row][col] = consts.TELEPORT
                 field[row][col+1] = consts.TELEPORT
                 field[row][col+2] = consts.TELEPORT
-                tp_list.append([row,col])
+                tp_list.append([row,col+1])
                 break
 
 
