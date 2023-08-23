@@ -4,6 +4,7 @@ import game_field
 import screen
 import soldier
 import time
+import DataBase
 import copy
 
 state = {
