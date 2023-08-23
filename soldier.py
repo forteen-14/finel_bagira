@@ -1,6 +1,6 @@
 import consts
 import game_field
-
+import TP
 
 def get_soldier_position(field):
     found_soldier = []
@@ -89,12 +89,12 @@ def up(field):
     for i in soldier_position:
         if 0 <= i[0]-1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
-                if field[i[0]-1][i[1]] == consts.MINE:
+                if field[i[0]+1][i[1]] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]-1][i[1]] == consts.TELEPORT:
+                if field[i[0]+1][i[1]] == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT
             if count < 6:
-                if field[i[0] - 1][i[1]] == consts.FLAG:
+                if field[i[0] + 1][i[1]] == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
         else:
             return "out of bounds"
@@ -105,3 +105,15 @@ def up(field):
         field[soldier_position[i][0]-1][soldier_position[i][1]] = consts.SOLDIER
     return "move"
 
+def check_soldier_status(state,field,tp_list):
+    if state["player_status"] == consts.SOLDIER_MINE_HIT:
+        state["state"] = consts.LOSE_STATE
+    elif state["player_status"] == consts.SOLDIER_TELEPORT:
+        TP.teleport_the_player(field, tp_list)
+        state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
+        state["state"] = consts.WIN_STATE
+    elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:
+        state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_MOVE:
+        state["state"] = consts.RUNNING_STATE

@@ -4,16 +4,17 @@ import time
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
-objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
+objects={
          "bush":[pygame.image.load(consts.BUSH_PNG_PATH),consts.BUSH_SIZE,consts.GRASS,consts.BUSH_PIXALES],
          "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE,consts.MINE_PIXALES],
          "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG,consts.FLAG_PIXALES],
+         "soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
          "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
          "snake": [pygame.image.load(consts.SNAKE_PATH),consts.SOLDIER_SIZE,6,consts.SOLDIER_PIXALES]
          }
 
 x_ray_object=[consts.SHOW_ON_XRAY,"night_soldier"]
-
+mobs=["soldier","night_soldier","snake"]
 
 
 
@@ -55,6 +56,8 @@ def draw_image(obj_info,field):
                 count_pixales-=1
 
 
+
+
 def draw_dead(field):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
     for i in range(len(photos)):
@@ -80,28 +83,37 @@ def drawGrid():
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
-def x_ray(field):
+def x_ray(field,main_field):
     drawGrid()
     for name in x_ray_object:
-        draw_image( objects[name], field)
+        if name in mobs:
+            draw_image( objects[name], field)
+        else:
+            draw_image(objects[name], main_field)
+
     draw_image(objects["flag"],field)
     time.sleep(consts.X_RAY_TIME)
 
 
-def draw_game(state,field):
+def draw_game(state,field,main_field):
     screen.fill(consts.BACKGROUND_COLOR)
 
 
     for name,info in objects.items():
         if name not in x_ray_object:
-            draw_image(info,field)
+            if name not in mobs:
+                draw_image(info,main_field)
+            else:
+                draw_image(info, field)
+
+
     if state["state"] == consts.SPACE_X_RAY:
-        x_ray(field)
+        x_ray(field,main_field)
         state["state"] = consts.RUNNING_STATE
 
     #============================= states
     if state["state"] == consts.LOSE_STATE:
-        x_ray(field)
+        x_ray(field,main_field)
         draw_dead(field)
         draw_lose_message()
     elif state["state"] == consts.WIN_STATE:
