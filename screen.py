@@ -9,6 +9,7 @@ objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SI
          "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE],
          "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG],
          "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER]
+         "dinosaur": []
          }
 object_pixales={"soldier": consts.SOLDIER_PIXALES,
                "bush": consts.BUSH_PIXALES,
@@ -31,14 +32,15 @@ def draw_welcome():
 
 
 def draw_load_game(game_number):
-    draw_message(consts.LOAD_GAME_MESSAGE, consts.WIN_FONT_SIZE,
-                 consts.WIN_COLOR, consts.WIN_LOCATION)
-    time.sleep(consts.LOAD_GAME_MSG_TIME)
+    draw_message(consts.LOAD_GAME_MESSAGE + str(game_number), consts.LOAD_MSG_FONT,
+                 consts.WIN_COLOR, consts.LOAD_LOCATION)
+
 
 def draw_save_game(game_number):
-    draw_message(consts.SAVE_GAME_MESSAFE, consts.WIN_FONT_SIZE,
-                 consts.WIN_COLOR, consts.WIN_LOCATION)
-    time.sleep(consts.LOAD_GAME_MSG_TIME)
+    print(game_number)
+    draw_message(consts.SAVE_GAME_MESSAFE + str(game_number), consts.LOAD_MSG_FONT,
+                 consts.WIN_COLOR, consts.LOAD_LOCATION)
+
 def draw_image(name,obj_info,field):
     loaded_img,size,object_index=obj_info
     img=loaded_img
@@ -86,8 +88,7 @@ def x_ray(field):
 
 def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
-    if state["state"] == consts.WELCOME_STATE:
-        draw_welcome()
+
 
     for name,info in objects.items():
         if name not in x_ray_object:
@@ -96,19 +97,21 @@ def draw_game(state,field):
         x_ray(field)
         state["state"] = consts.RUNNING_STATE
 
-     #=============================
-    if state["state"]==consts.LOSE_STATE:
+    #=============================
+    if state["state"] == consts.LOSE_STATE:
         x_ray(field)
         draw_dead(field)
         draw_lose_message()
-    elif state["state"]==consts.WIN_STATE:
+    elif state["state"] == consts.WIN_STATE:
         draw_win_message()
-    if  state["is_key_load"]==consts.LOAD_STATE:
+    if state["is_key_load"] == consts.LOAD_STATE:
         draw_load_game(state["what_number_pressed"])
 
 
-    if state["is_key_load"]==consts.SAVE_STATE:
+    if state["is_key_load"] == consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
+    if state["state"] == consts.WELCOME_STATE:
+        draw_welcome()
 
 
 
