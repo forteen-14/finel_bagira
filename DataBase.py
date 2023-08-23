@@ -16,8 +16,7 @@ def SaveGame(key_pressed,field):
 
 
 def loadGame(key_pressed):
-    if not key_pressed == consts.DEFAULT_KEY_LOAD_AND_SAVE:
-        return df.get(key_pressed).values
+    return df.get(key_pressed).values
 
 def SaveDataBaseOnComputer():
     df.to_csv(consts.DB_NAME_PATH, index=False)
