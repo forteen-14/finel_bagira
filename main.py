@@ -85,7 +85,7 @@ def main():
     start_count = 0
     pygame.init()
     field = game_field.create_field()
-    field_copy = game_field.create_field()
+    field_copy = copy.deepcopy(field)
     game_field.print_field(field)
     while state["is_window_open"]:
         start_count = event_handler(field, start_count)
@@ -101,7 +101,6 @@ def main():
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
-
 
 
 if __name__ == '__main__':
