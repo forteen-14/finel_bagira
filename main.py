@@ -11,12 +11,12 @@ state = {
     "state": consts.WELCOME_STATE,
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
-    "is_key_held": False,
-    "what_number_pressed": ""
+    "is_key_load": False,
+    "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE
 
 
 }
-DB=DataBase.DataBase()
+
 
 
 def check_soldier_status(field):
@@ -58,7 +58,7 @@ def event_handler(field, start_count):
                 if event.unicode.isdigit():
                     space_end = pygame.time.get_ticks()
                     if space_end - start_count >= 1000:
-                        state["is_key_held"] = True
+                        state["is_key_load"] = True
                         state["what_number_pressed"] = event.unicode
             elif state["state"] != consts.RUNNING_STATE:
                 continue
@@ -75,6 +75,7 @@ def fix_field(field, field_copy):
 
 
 def main():
+    DataBase.DataBase()
     start_count = 0
     pygame.init()
     field = game_field.create_field()
@@ -85,6 +86,9 @@ def main():
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state, field)
+        if state["is_key_load"]:
+            DataBase.loadGame(state["what_number_pressed"])
+
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)

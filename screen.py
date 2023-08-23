@@ -104,10 +104,10 @@ def draw_game(state,field):
         draw_lose_message()
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
-    # if state[]!=consts.DEFAULT_KEY_LOAD_and_save:
+    # if state[""]:
     #     draw_load_game(state[])
-    #     state[]=consts.DEFAULT_KEY_LOAD_and_save
-    # if state[]!=consts.DEFAULT_KEY_LOAD_and_save:
+    #     state[""]=consts.DEFAULT_KEY_LOAD_and_save
+    # if not state[]:
     #     draw_save_game(state[])
     #     state[]=consts.DEFAULT_KEY_LOAD_and_save
 

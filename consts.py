@@ -93,4 +93,4 @@ DB_NAME_PATH="saveGames.csv"
 
 LOAD_GAME_MESSAGE="loading game: "
 SAVE_GAME_MESSAFE="Saving game at: "
-DEFAULT_KEY_LOAD_and_save='m'
+DEFAULT_KEY_LOAD_AND_SAVE= ""
