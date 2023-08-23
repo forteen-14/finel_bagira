@@ -92,12 +92,27 @@ def main():
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
         screen.draw_game(state, field)
+
+       # print(state["is_key_load"])
+        if state["is_key_load"]==consts.LOAD_STATE:
+            print("x load",state["what_number_pressed"])
+            DataBase.loadGame(state["what_number_pressed"])
+            state["is_key_load"] = consts.NEUTRAL_STATE
+            state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
+        elif state["is_key_load"]==consts.SAVE_STATE:
+            DataBase.SaveGame(state["what_number_pressed"],field)
+            state["is_key_load"] = consts.NEUTRAL_STATE
+            state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
+            print("x save")
+
+
         if state["is_key_load"] == consts.LOAD_STATE:
             print("load")
             DataBase.loadGame(state["what_number_pressed"])
         elif state["is_key_load"] == consts.SAVE_STATE:
             DataBase.SaveGame(state["what_number_pressed"], field)
             print("save")
+
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
