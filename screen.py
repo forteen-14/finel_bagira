@@ -4,18 +4,14 @@ import time
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
-objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER],
-         "bush":[pygame.image.load(consts.BUSH_PNG_PATH),consts.BUSH_SIZE,consts.GRASS],
-         "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE],
-         "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG],
-         "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER]
-         "dinosaur": []
+objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
+         "bush":[pygame.image.load(consts.BUSH_PNG_PATH),consts.BUSH_SIZE,consts.GRASS,consts.BUSH_PIXALES],
+         "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE,consts.MINE_PIXALES],
+         "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG,consts.FLAG_PIXALES],
+         "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
+         "snake": [pygame.image.load(consts.SNAKE_PATH),consts.SOLDIER_SIZE,6,consts.SOLDIER_PIXALES]
          }
-object_pixales={"soldier": consts.SOLDIER_PIXALES,
-               "bush": consts.BUSH_PIXALES,
-               "mine": consts.MINE_PIXALES,
-               "flag": consts.FLAG_PIXALES,
-               "night_soldier":consts.SOLDIER_PIXALES}
+
 x_ray_object=[consts.SHOW_ON_XRAY,"night_soldier"]
 
 
@@ -42,7 +38,7 @@ def draw_save_game(game_number):
                  consts.WIN_COLOR, consts.LOAD_LOCATION)
 
 def draw_image(name,obj_info,field):
-    loaded_img,size,object_index=obj_info
+    loaded_img,size,object_index,object_pixales=obj_info
     img=loaded_img
     img = pygame.transform.scale(img,size)
     count_pixales=0
@@ -51,7 +47,7 @@ def draw_image(name,obj_info,field):
             if field[row][col]==object_index:
                 if count_pixales==0:
                     screen.blit(img, (col * consts.BLOCK_SIZE, row * consts.BLOCK_SIZE))
-                    count_pixales=object_pixales[name]
+                    count_pixales=object_pixales
                 count_pixales-=1
 
 
@@ -97,21 +93,22 @@ def draw_game(state,field):
         x_ray(field)
         state["state"] = consts.RUNNING_STATE
 
-    #=============================
+    #============================= states
     if state["state"] == consts.LOSE_STATE:
         x_ray(field)
         draw_dead(field)
         draw_lose_message()
     elif state["state"] == consts.WIN_STATE:
         draw_win_message()
+    elif state["state"] == consts.WELCOME_STATE:
+        draw_welcome()
+    #=============================  load and save
     if state["is_key_load"] == consts.LOAD_STATE:
         draw_load_game(state["what_number_pressed"])
-
-
     if state["is_key_load"] == consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
-    if state["state"] == consts.WELCOME_STATE:
-        draw_welcome()
+
+
 
 
 
