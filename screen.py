@@ -105,12 +105,12 @@ def draw_game(state,field):
         draw_win_message()
     if  state["is_key_load"]==consts.LOAD_STATE:
         draw_load_game(state["what_number_pressed"])
-        state["is_key_load"]=consts.NEUTRAL_STATE
-        state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
+
+
     if state["is_key_load"]==consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
-        state["what_number_pressed"]=consts.DEFAULT_KEY_LOAD_AND_SAVE
-        state["is_key_load"]=consts.NEUTRAL_STATE
+
+
 
 
     pygame.display.flip()

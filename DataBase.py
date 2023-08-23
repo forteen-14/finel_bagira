@@ -13,11 +13,13 @@ def DataBase():
 
 def SaveGame(key_pressed,field):
     df[str(key_pressed)]=field
+    df.to_csv(consts.DB_NAME_PATH, index=False)
 
 
 def loadGame(key_pressed):
+    print(key_pressed)
     return df.get(key_pressed).values
 
-def SaveDataBaseOnComputer():
-    df.to_csv(consts.DB_NAME_PATH, index=False)
+
+
 
