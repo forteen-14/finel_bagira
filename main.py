@@ -15,6 +15,7 @@ state = {
 
 
 }
+DB=DataBase.DataBase()
 
 
 def check_soldier_status(field):

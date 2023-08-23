@@ -7,12 +7,15 @@ screen = pygame.display.set_mode(
 objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER],
          "bush":[pygame.image.load(consts.BUSH_PNG_PATH),consts.BUSH_SIZE,consts.GRASS],
          "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE],
-         "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG]
+         "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG],
+         "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER]
          }
 object_pixales={"soldier": consts.SOLDIER_PIXALES,
                "bush": consts.BUSH_PIXALES,
                "mine": consts.MINE_PIXALES,
-               "flag": consts.FLAG_PIXALES}
+               "flag": consts.FLAG_PIXALES,
+               "night_soldier":consts.SOLDIER_PIXALES}
+x_ray_object=[consts.SHOW_ON_XRAY,"night_soldier"]
 
 
 
@@ -27,8 +30,15 @@ def draw_welcome():
     draw_message(consts.WELCOME_MESSAGE, consts.WELCOME_FONT_SIZE, consts.WELCOME_COLOR, consts.WELCOME_LOCATION)
 
 
+def draw_load_game(game_number):
+    draw_message(consts.LOAD_GAME_MESSAGE, consts.WIN_FONT_SIZE,
+                 consts.WIN_COLOR, consts.WIN_LOCATION)
+    time.sleep(consts.LOAD_GAME_MSG_TIME)
 
-
+def draw_save_game(game_number):
+    draw_message(consts.SAVE_GAME_MESSAFE, consts.WIN_FONT_SIZE,
+                 consts.WIN_COLOR, consts.WIN_LOCATION)
+    time.sleep(consts.LOAD_GAME_MSG_TIME)
 def draw_image(name,obj_info,field):
     loaded_img,size,object_index=obj_info
     img=loaded_img
@@ -69,25 +79,37 @@ def x_ray(field):
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
     time.sleep(consts.X_RAY_TIME)
-    draw_image(consts.SHOW_ON_XRAY, objects[consts.SHOW_ON_XRAY], field)
+    for name in x_ray_object:
+        print(name)
+        draw_image(name, objects[name], field)
 
 
 def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
     if state["state"] == consts.WELCOME_STATE:
         draw_welcome()
-    elif state["state"] == consts.SPACE_X_RAY:
+
+
+    for name,info in objects.items():
+        if name not in x_ray_object:
+            draw_image(name,info,field)
+    if state["state"] == consts.SPACE_X_RAY:
         x_ray(field)
         state["state"] = consts.RUNNING_STATE
-    for name,info in objects.items():
-        if name!="mine":
-            draw_image(name,info,field)
+
+     #=============================
     if state["state"]==consts.LOSE_STATE:
         x_ray(field)
         draw_dead(field)
         draw_lose_message()
     elif state["state"]==consts.WIN_STATE:
         draw_win_message()
+    # if state[]!=consts.DEFAULT_KEY_LOAD_and_save:
+    #     draw_load_game(state[])
+    #     state[]=consts.DEFAULT_KEY_LOAD_and_save
+    # if state[]!=consts.DEFAULT_KEY_LOAD_and_save:
+    #     draw_save_game(state[])
+    #     state[]=consts.DEFAULT_KEY_LOAD_and_save
 
 
     pygame.display.flip()

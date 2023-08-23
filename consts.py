@@ -43,6 +43,9 @@ SOLIDER_PNG_PATH="rec/soldier.png"
 MINE_PNG_PATH = "rec/mine.png"
 BUSH_PNG_PATH="rec/grass.png"
 FLAG_PNG_PATH="rec/flag.png"
+NIGHT_SOLDIER_PATH="rec/soldier_nigth.png"
+SOLDIER_DEATH_PATH="rec/injury.png"
+BANG_PATH="rec/explotion.png"
 DIFFERENT_OBJECT_COUNT=4
 
 SOLIDER_WIDTH=2*BLOCK_SIZE
@@ -70,8 +73,7 @@ FLAG_PIXALES=12
 FLAG_START_POINT=(0,0)
 
 
-SOLDIER_DEATH_PATH="rec/injury.png"
-BANG_PATH="rec/explotion.png"
+
 
 LOSE_MESSAGE = "You Lost!"
 LOSE_FONT_SIZE = int(0.15 * WINDOW_WIDTH)
@@ -85,5 +87,10 @@ WIN_LOCATION = \
     (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (WIN_FONT_SIZE / 2))
 TIME_DELAY=3
 X_RAY_TIME=1
+LOAD_GAME_MSG_TIME=2
 SHOW_ON_XRAY="mine"
 DB_NAME_PATH="saveGames.csv"
+
+LOAD_GAME_MESSAGE="loading game: "
+SAVE_GAME_MESSAFE="Saving game at: "
+DEFAULT_KEY_LOAD_and_save='m'
