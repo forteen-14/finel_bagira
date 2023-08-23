@@ -68,9 +68,7 @@ def draw_win_message():
                  consts.WIN_COLOR, consts.WIN_LOCATION)
 
 
-
-
-def x_ray(field):
+def drawGrid():
     # Set the size of the grid block
     screen.fill(consts.BLACK)
     for x in range(0, consts.WINDOW_WIDTH, consts.BLOCK_SIZE):
@@ -78,6 +76,8 @@ def x_ray(field):
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
+def x_ray(field):
+    drawGrid()
     for name in x_ray_object:
         draw_image( objects[name], field)
     draw_image(objects["flag"],field)
@@ -109,8 +109,6 @@ def draw_game(state,field):
         draw_load_game(state["what_number_pressed"])
     if state["is_key_load"] == consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
-
-
 
 
 

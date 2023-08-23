@@ -18,7 +18,6 @@ state = {
 }
 
 
-
 def check_soldier_status(field):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
@@ -57,7 +56,7 @@ def event_handler(field, start_count):
             if event.type == pygame.KEYUP:
                 if event.unicode.isdigit():
                     space_end = pygame.time.get_ticks()
-                    if space_end - start_count >= 1000:
+                    if space_end - start_count >= consts.SAVE_PRESS_TIME:
                         state["is_key_load"] = consts.SAVE_STATE
                         state["what_number_pressed"] = event.unicode
                         print("save")
@@ -98,7 +97,8 @@ def main():
 
        # load and save ==================
         if state["is_key_load"]==consts.LOAD_STATE:
-            field,field_copy=DataBase.loadGame(state["what_number_pressed"])
+            if DataBase.isKeyExist(state["what_number_pressed"]):
+                field,field_copy=DataBase.loadGame(state["what_number_pressed"])
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             time.sleep(consts.LOAD_GAME_MSG_TIME)
@@ -112,7 +112,7 @@ def main():
 
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
-            exit(0)
+            break
 
 
 if __name__ == '__main__':
