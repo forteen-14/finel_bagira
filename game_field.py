@@ -39,10 +39,10 @@ def create_mines(field):
 def create_teleports(field,tp_list):
     #put 5 random teleports
     for i in range(consts.TELEPORT_AMOUNT):
-        #teleports take 3 spots in a row
+        #teleports take 3 spots in a row and it can only be between 4-20 rows
         while True:
-            row = random.randint(0, consts.BOARD_GRID_ROW - 1)
-            col = random.randint(0, consts.BOARD_GRID_COLS - 3)
+            row = random.randint(4, consts.BOARD_GRID_ROW - 1)
+            col = random.randint(4, consts.BOARD_GRID_COLS - 20)
             if field[row][col] == consts.EMPTY and field[row][col+1] == consts.EMPTY and field[row][col+2] == consts.EMPTY:
                 field[row][col] = consts.TELEPORT
                 field[row][col+1] = consts.TELEPORT
