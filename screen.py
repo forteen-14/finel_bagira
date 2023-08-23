@@ -37,7 +37,7 @@ def draw_save_game(game_number):
     draw_message(consts.SAVE_GAME_MESSAFE + str(game_number), consts.LOAD_MSG_FONT,
                  consts.WIN_COLOR, consts.LOAD_LOCATION)
 
-def draw_image(name,obj_info,field):
+def draw_image(obj_info,field):
     loaded_img,size,object_index,object_pixales=obj_info
     img=loaded_img
     img = pygame.transform.scale(img,size)
@@ -54,7 +54,8 @@ def draw_image(name,obj_info,field):
 def draw_dead(field):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
     for i in range(len(photos)):
-        draw_image("soldier",[photos[i],consts.SOLDIER_SIZE,consts.SOLDIER],field)
+        draw_image([photos[i],consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],field)
+
 
 def draw_lose_message():
 
@@ -78,7 +79,8 @@ def x_ray(field):
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
     for name in x_ray_object:
-        draw_image(name, objects[name], field)
+        draw_image( objects[name], field)
+    draw_image(objects["flag"],field)
     time.sleep(consts.X_RAY_TIME)
 
 
@@ -88,7 +90,7 @@ def draw_game(state,field):
 
     for name,info in objects.items():
         if name not in x_ray_object:
-            draw_image(name,info,field)
+            draw_image(info,field)
     if state["state"] == consts.SPACE_X_RAY:
         x_ray(field)
         state["state"] = consts.RUNNING_STATE
