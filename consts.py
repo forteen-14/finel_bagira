@@ -46,9 +46,8 @@ FLAG_PNG_PATH="rec/flag.png"
 NIGHT_SOLDIER_PATH="rec/soldier_nigth.png"
 SOLDIER_DEATH_PATH="rec/injury.png"
 BANG_PATH="rec/explotion.png"
-
-
-
+SNAKE_PATH="rec/snake.png"
+DIFFERENT_OBJECT_COUNT=4
 
 SOLIDER_WIDTH=2*BLOCK_SIZE
 SOLIDER_HEIGHT=4*BLOCK_SIZE
