@@ -3,7 +3,6 @@ import random
 
 
 def create_characters(field):
-
     #make the soldier take 2X4 spots in the top left and the flag 3X4 in the bottom right
     for row in range(4):
         for col in range(2):
@@ -37,19 +36,36 @@ def create_mines(field):
                     break
 
 
+def create_teleports(field,tp_list):
+    #put 5 random teleports
+    for i in range(consts.TELEPORT_AMOUNT):
+        #teleports take 3 spots in a row
+        while True:
+            row = random.randint(0, consts.BOARD_GRID_ROW - 1)
+            col = random.randint(0, consts.BOARD_GRID_COLS - 3)
+            if field[row][col] == consts.EMPTY and field[row][col+1] == consts.EMPTY and field[row][col+2] == consts.EMPTY:
+                field[row][col] = consts.TELEPORT
+                field[row][col+1] = consts.TELEPORT
+                field[row][col+2] = consts.TELEPORT
+                tp_list.append([row,col])
+                break
+
+
+def create_guard(field):
+    pass
+
 
 def print_field(field):
     for row in field:
         print(row)
 
 
-def create_field():
+def create_field(tp_list):
     # create the field 2d list
     game_filed = [[consts.EMPTY for col in range(consts.BOARD_GRID_COLS)] for row in range(consts.BOARD_GRID_ROW)]
     create_characters(game_filed)
     create_mines(game_filed)
-
-
+    create_teleports(game_filed,tp_list)
     return game_filed
 
 

@@ -83,10 +83,11 @@ def fix_field(field, field_copy):
 
 
 def main():
+    tp_list = []
     DataBase.DataBase()
     start_count = 0
     pygame.init()
-    field = game_field.create_field()
+    field = game_field.create_field(tp_list)
     field_copy = copy.deepcopy(field)
     game_field.print_field(field)
     while state["is_window_open"]:

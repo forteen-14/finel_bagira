@@ -85,6 +85,8 @@ def up(field):
             if count >= 6:
                 if field[i[0]-1][i[1]] == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
+                if field[i[0]-1][i[1]] == consts.TELEPORT:
+                    return consts.SOLDIER_TELEPORT
             if count < 6:
                 if field[i[0] - 1][i[1]] == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
