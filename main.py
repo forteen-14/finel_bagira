@@ -71,7 +71,7 @@ def main():
             fix_field(field, field_copy)
         screen.draw_game(state,field)
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
-            time.sleep(3)
+            time.sleep(consts.TIME_DELAY)
             exit(0)
 
 

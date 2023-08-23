@@ -39,9 +39,7 @@ def draw_image(name,obj_info,field):
             if field[row][col]==object_index:
                 if count_pixales==0:
                     screen.blit(img, (col * consts.BLOCK_SIZE, row * consts.BLOCK_SIZE))
-
                     count_pixales=object_pixales[name]
-
                 count_pixales-=1
 
 
@@ -74,8 +72,8 @@ def draw_game(state,field):
     screen.fill(consts.BACKGROUND_COLOR)
     def x_ray_handle():
         x_ray()
-        time.sleep(1)
-        draw_image("mine", objects["mine"], field)
+        time.sleep(consts.X_RAY_TIME)
+        draw_image(consts.SHOW_ON_XRAY, objects[consts.SHOW_ON_XRAY], field)
 
     if state["state"] == consts.WELCOME_STATE:
         draw_welcome()
