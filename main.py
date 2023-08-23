@@ -72,11 +72,11 @@ def main():
         event_handler(field)
         if state["state"] == consts.RUNNING_STATE:
             fix_field(field, field_copy)
-
+        screen.draw_game(state, field)
         if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
-        screen.draw_game(state, field)
+
 
 
 if __name__ == '__main__':
