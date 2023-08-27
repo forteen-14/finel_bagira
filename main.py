@@ -88,7 +88,7 @@ def main():
                 is_third_loop = 0
             else:
                 is_third_loop += 1
-            fix_field(field, field_copy)
+            game_field.fix_field(field, field_copy)
         screen.draw_game(state, field, field_copy)
         start_count = event_handler(field, start_count, tp_list)
         screen.draw_game(state, field, field_copy)
