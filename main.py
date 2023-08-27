@@ -7,13 +7,15 @@ import time
 import DataBase
 import copy
 import TP
+import guard
 
 state = {
     "state": consts.WELCOME_STATE,
     "player_status": consts.SOLDIER_MOVE,
     "is_window_open": True,
     "is_key_load": consts.NEUTRAL_STATE,
-    "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE
+    "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE,
+    "guard_Direction": consts.GUARD_RIGHT
 }
 
 
@@ -29,6 +31,8 @@ def check_soldier_status(field, tp_list):
         state["state"] = consts.RUNNING_STATE
     elif state["player_status"] == consts.SOLDIER_MOVE:
         state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_GUARD_HIT:
+        state["state"] = consts.LOSE_STATE
 
 
 def event_handler(field, start_count, tp_list):
@@ -77,6 +81,8 @@ def fix_field(field, field_copy):
         for col in range(len(field[row])):
             if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
                 continue
+            #check for the gaurd too
+            if row ==
             if not field[row][col] == consts.SOLDIER:
                 field[row][col] = field_copy[row][col]
             if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
@@ -94,6 +100,7 @@ def main():
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
+            guard.move_guard(field, state["guard_Direction"])
             fix_field(field, field_copy)
         screen.draw_game(state, field)
 

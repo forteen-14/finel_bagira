@@ -17,15 +17,18 @@ def right(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
+        next_position_info = field[i[0]][i[1]+1]
         if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] +1 < consts.BOARD_GRID_COLS:
             if count >= 6:
-                if field[i[0]][i[1]+ 1] == consts.MINE:
+                if next_position_info == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]][i[1]+1] == consts.TELEPORT:
+                if next_position_info == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT
             if count < 6:
-                if field[i[0]][i[1]+1] == consts.FLAG:
+                if next_position_info == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
+            if next_position_info == consts.GUARD:
+                return consts.SOLDIER_GUARD_HIT
         else:
             return "out of bounds"
         count += 1
@@ -40,15 +43,18 @@ def left(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
-        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] -1 < consts.BOARD_GRID_COLS:
+        next_position_info = field[i[0]][i[1]-1]
+        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] - 1 < consts.BOARD_GRID_COLS:
             if count >= 6:
-                if field[i[0]][i[1]-1] == consts.MINE:
+                if next_position_info == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]][i[1]-1] == consts.TELEPORT:
+                if next_position_info == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT
             if count < 6:
-                if field[i[0]-1][i[1]] == consts.FLAG:
+                if next_position_info == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
+            if next_position_info == consts.GUARD:
+                return consts.SOLDIER_GUARD_HIT
         else:
             return "out of bounds"
         count += 1
@@ -63,15 +69,18 @@ def down(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
-        if 0 <= i[0]+1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS :
+        next_position_info = field[i[0]+1][i[1]]
+        if 0 <= i[0]+1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
-                if field[i[0]+1][i[1]] == consts.MINE:
+                if next_position_info == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]+1][i[1]] == consts.TELEPORT:
+                if next_position_info == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT
             if count < 6:
-                if field[i[0]+1][i[1]] == consts.FLAG:
+                if next_position_info == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
+            if next_position_info == consts.GUARD:
+                return consts.SOLDIER_GUARD_HIT
         else:
             return "out of bounds"
         count += 1
@@ -87,15 +96,18 @@ def up(field):
     count = 0
     soldier_position = get_soldier_position(field)
     for i in soldier_position:
+        next_position_info = field[i[0]+1][i[1]]
         if 0 <= i[0]-1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
-                if field[i[0]-1][i[1]] == consts.MINE:
+                if next_position_info == consts.MINE:
                     return consts.SOLDIER_MINE_HIT
-                if field[i[0]-1][i[1]] == consts.TELEPORT:
+                if next_position_info == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT
             if count < 6:
-                if field[i[0] - 1][i[1]] == consts.FLAG:
+                if next_position_info == consts.FLAG:
                     return consts.SOLDIER_FLAG_HIT
+            if next_position_info == consts.GUARD:
+                return consts.SOLDIER_GUARD_HIT
         else:
             return "out of bounds"
         count += 1
