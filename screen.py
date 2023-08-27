@@ -56,10 +56,11 @@ def draw_image(obj_info,field):
 
 
 
-def draw_dead(field):
+def draw_dead(field,state):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
     for i in range(len(photos)):
-        draw_image([photos[i],consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],field)
+        if not (state["object_hitted"]==consts.GUARD and i==0):
+            draw_image([photos[i],consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],field)
 
 
 def draw_lose_message():
@@ -112,7 +113,7 @@ def draw_game(state,field,main_field):
     #============================= states
     if state["state"] == consts.LOSE_STATE:
         x_ray(field,main_field)
-        draw_dead(field)
+        draw_dead(field,state)
         draw_lose_message()
     elif state["state"] == consts.WIN_STATE:
         draw_win_message()

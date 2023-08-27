@@ -66,17 +66,7 @@ def event_handler(field, start_count,tp_list):
     return start_count
 
 
-def fix_field(field, field_copy):
-    for row in range(len(field)):
-        for col in range(len(field[row])):
-            if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
-                continue
-            if row == 10 and col == 0 or row == 10 and col == 1 or row == 11 and col == 0 or row == 11 and col == 1 or row == 12 and col == 0 or row == 12 and col == 1 or row == 13 and col == 0 or row == 13 and col == 1:
-                continue
-            if not field[row][col] == consts.SOLDIER and not field[row][col] == consts.GUARD:
-                field[row][col] = field_copy[row][col]
-            elif field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG and field[row][col] == consts.GUARD:
-                field[row][col] = field_copy[row][col]
+
 
 
 def main():
