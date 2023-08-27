@@ -12,7 +12,7 @@ def fix_field(field, field_copy):
             if field[row][col] in mobs:
                 continue
             else:
-                field[row][col] = field_copy[row][col]
+                field[row][ col] = field_copy[row][col]
             if field[row][col]==consts.SOLDIER:
                 field[row][col]=consts.EMPTY
 
