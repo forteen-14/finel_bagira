@@ -82,16 +82,17 @@ def fix_field(field, field_copy):
         for col in range(len(field[row])):
             if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
                 continue
-            #check for the gaurd too
-           # if row ==
-            if not field[row][col] == consts.SOLDIER:
+            if row == 10 and col == 0 or row == 10 and col == 1 or row == 11 and col == 0 or row == 11 and col == 1 or row == 12 and col == 0 or row == 12 and col == 1 or row == 13 and col == 0 or row == 13 and col == 1:
+                continue
+            if not field[row][col] == consts.SOLDIER and not field[row][col] == consts.GUARD:
                 field[row][col] = field_copy[row][col]
-            if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
+            elif field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG and field[row][col] == consts.GUARD:
                 field[row][col] = field_copy[row][col]
 
 
 def main():
     tp_list = []
+    is_third_loop = False
     DataBase.DataBase()
     start_count = 0
     pygame.init()
@@ -101,13 +102,15 @@ def main():
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
-            guard.move_guard(field, state["guard_Direction"])
+            if is_third_loop == 3:
+                guard.move_guard(field, state["guard_Direction"])
+                is_third_loop = 0
+            else:
+                is_third_loop += 1
             fix_field(field, field_copy)
         screen.draw_game(state, field, field_copy)
         start_count = event_handler(field, start_count,tp_list)
-        game_field.fix_field(field, field_copy)
         screen.draw_game(state, field,field_copy)
-
        # load and save ==================
         if state["is_key_load"]==consts.LOAD_STATE:
             field,field_copy=DataBase.loadGame(state["what_number_pressed"])
