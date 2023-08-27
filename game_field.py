@@ -2,6 +2,10 @@ import consts
 import random
 
 mobs=[consts.SOLDIER,consts.GUARD]
+
+# parameters: field and field_copy
+# return: None
+# this function fix the field after the soldier moved
 def fix_field(field, field_copy):
     for row in range(len(field)):
         for col in range(len(field[row])):
@@ -13,6 +17,10 @@ def fix_field(field, field_copy):
                 field[row][col]=consts.EMPTY
 
 
+
+# parameters: field
+# return: None
+# this function create the soldier in the field
 def create_characters(field):
     # make the soldier take 2X4 spots in the top left and the flag 3X4 in the bottom right
     for row in range(4):
@@ -23,6 +31,9 @@ def create_characters(field):
             field[consts.BOARD_GRID_ROW - row - 1][consts.BOARD_GRID_COLS - col - 1] = consts.FLAG
 
 
+# parameters: field
+# return: None
+# this function create the grass in the field
 def create_grass(field):
     for i in range(consts.GRASS_AMOUNT):
         # check if the spot is already taken ny soldier or flag
@@ -34,6 +45,9 @@ def create_grass(field):
                 break
 
 
+# parameters: field
+# return: None
+# this function create the mines in the field
 def create_mines(field):
     # put 20 random mines
     for i in range(consts.MINES_AMOUNT):
@@ -50,6 +64,9 @@ def create_mines(field):
                 break
 
 
+# parameters: field and tp_list
+# return: None
+# this function create the teleports in the field
 def create_teleports(field, tp_list):
     # put 5 random teleports
     for i in range(consts.TELEPORT_AMOUNT):
@@ -66,6 +83,9 @@ def create_teleports(field, tp_list):
                 break
 
 
+# parameters: field
+# return: None
+# this function create the guard in the field
 def create_guard(field):
     # put the guard in the GUARD_START_POINT
     for row in range(consts.GUARD_HIGHT):
@@ -73,11 +93,17 @@ def create_guard(field):
             field[consts.GUARD_START_POINT[0] + row][consts.GUARD_START_POINT[1] + col] = consts.GUARD
 
 
+# parameters: field
+# return: None
+# this function print the field
 def print_field(field):
     for row in field:
         print(row)
 
 
+# parameters: tp_list
+# return: None
+# this function crate the tp_list
 def create_field(tp_list):
     # create the field 2d list
     game_filed = [[consts.EMPTY for col in range(consts.BOARD_GRID_COLS)] for row in range(consts.BOARD_GRID_ROW)]

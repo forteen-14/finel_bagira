@@ -2,6 +2,10 @@ import consts
 import game_field
 import TP
 
+
+# parameters: field
+# return: list of the soldier position
+# this function return the position of the soldier in the field
 def get_soldier_position(field):
     found_soldier = []
     tmp_list = []
@@ -13,6 +17,9 @@ def get_soldier_position(field):
     return found_soldier
 
 
+# parameters: field
+# return: the status of the soldier
+# this function return the status of the soldier after he moved and makes the move one step to the right
 def right(field):
     count = 0
     soldier_position = get_soldier_position(field)
@@ -39,6 +46,9 @@ def right(field):
     return "move"
 
 
+# parameters: field
+# return: the status of the soldier
+# this function return the status of the soldier after he moved and makes the move one step to the left
 def left(field):
     count = 0
     soldier_position = get_soldier_position(field)
@@ -65,6 +75,9 @@ def left(field):
     return "move"
 
 
+# parameters: field
+# return: the status of the soldier
+# this function return the status of the soldier after he moved and makes the move one step down
 def down(field):
     count = 0
     soldier_position = get_soldier_position(field)
@@ -92,6 +105,9 @@ def down(field):
     return "move"
 
 
+# parameters: field
+# return: the status of the soldier
+# this function return the status of the soldier after he moved and makes the move one step up
 def up(field):
     count = 0
     soldier_position = get_soldier_position(field)
@@ -117,6 +133,10 @@ def up(field):
         field[soldier_position[i][0]-1][soldier_position[i][1]] = consts.SOLDIER
     return "move"
 
+
+# parameters: state, field, tp_list
+# return: None
+# this function checks the status of the soldier and change the state accordingly
 def check_soldier_status(state,field,tp_list):
     if state["player_status"] == consts.SOLDIER_MINE_HIT:
         state["state"] = consts.LOSE_STATE
