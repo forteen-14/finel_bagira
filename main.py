@@ -80,7 +80,7 @@ def fix_field(field, field_copy):
 
 def main():
     tp_list = []
-    is_third_loop = False
+    is_third_loop = 0
     DataBase.DataBase()
     start_count = 0
     pygame.init()
@@ -91,7 +91,7 @@ def main():
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
             if is_third_loop == 3:
-                state["guard_Direction"] = guard.move_guard(field, state["guard_Direction"])
+                guard.update_guard_status(state,field,state["guard_Direction"])
                 is_third_loop = 0
             else:
                 is_third_loop += 1

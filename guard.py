@@ -21,8 +21,9 @@ def move_guard(field, direction):
     return direction
 
 
+
 def move_guard_right(field, guard_position):
-    print(guard_position[0][0], guard_position[0][1] + consts.GUARD_SPEED)
+
     for i in guard_position:
         next_position_info = field[i[0]][i[1]+1]
         if 0 <= i[0] < consts.BOARD_GRID_ROW-consts.GUARD_SPEED and 0 <= i[1] + consts.GUARD_SPEED < consts.BOARD_GRID_COLS-consts.GUARD_SPEED:
@@ -30,13 +31,17 @@ def move_guard_right(field, guard_position):
             field[i[0]][i[1]] = consts.EMPTY
         else:
             return consts.SOLDIER_OUT_OF_BOUNDS
-    # for i in guard_position:
-    #     field[i[0]][i[1]] = consts.EMPTY
-    #     #print field
 
-    # print("\n")
-    # print("\n")
-    # print("\n")
+def isHitSolider(field, guard_position,direction):
+    step=1
+    if direction==consts.GUARD_LEFT:
+        step=-1
+    for position in guard_position:
+        if field[position[0]][position[1]+step]==consts.SOLDIER:
+            return True
+        return False
+
+
 
 
 
@@ -49,9 +54,9 @@ def move_guard_left(field, guard_position):
             return consts.SOLDIER_OUT_OF_BOUNDS
     for i in guard_position:
         field[i[0]][i[1]] = consts.EMPTY
-        #print field
-    for i in field:
-        print(i)
-    print("\n")
-    print("\n")
-    print("\n")
+
+def update_guard_status(state,field,direction):
+    if isHitSolider(field,get_guard_position(field),direction):
+        state["state"]=consts.LOSE_STATE
+        return
+    state["guard_Direction"]=move_guard(field,direction)
