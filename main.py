@@ -15,7 +15,8 @@ state = {
     "is_window_open": True,
     "is_key_load": consts.NEUTRAL_STATE,
     "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE,
-    "guard_Direction": consts.GUARD_RIGHT
+    "guard_Direction": consts.GUARD_RIGHT,
+    "object_hitted":consts.EMPTY
 }
 
 
@@ -95,7 +96,7 @@ def main():
                 is_third_loop = 0
             else:
                 is_third_loop += 1
-            fix_field(field, field_copy)
+            game_field.fix_field(field, field_copy)
         screen.draw_game(state, field, field_copy)
         start_count = event_handler(field, start_count,tp_list)
         screen.draw_game(state, field,field_copy)
