@@ -16,15 +16,15 @@ def isKeyExist(key):
 # this function loads the data base
 def DataBase():
     global df
-    if os.path.exists(f'./{consts.DB_NAME_PATH}'):
+    if os.path.exists(f"./{consts.DB_NAME_PATH}"):
         df = pd.read_pickle(consts.DB_NAME_PATH)
 
 
 # parameters: key_pressed, field, field_copy
 # return: None
 # this function saves the game in the data base
-def SaveGame(key_pressed,field,field_copy):
-    df[str(key_pressed)]=[field,field_copy]
+def SaveGame(key_pressed, field, field_copy):
+    df[str(key_pressed)] = [field, field_copy]
     df.to_pickle(consts.DB_NAME_PATH)
 
 
@@ -33,7 +33,3 @@ def SaveGame(key_pressed,field,field_copy):
 # this function loads the game from the data base
 def loadGame(key_pressed):
     return df[key_pressed].values.tolist()
-
-
-
-
