@@ -16,7 +16,7 @@ state = {
     "is_key_load": consts.NEUTRAL_STATE,
     "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE,
     "guard_Direction": consts.GUARD_RIGHT,
-    "object_hitted":consts.EMPTY
+    "object_hitted": consts.EMPTY
 }
 
 
@@ -71,6 +71,7 @@ def event_handler(field, start_count, tp_list):
 def check_if_guard_hit(field):
     if len(soldier.get_soldier_position(field)) < consts.SOLDIER_PIXALES:
         state["state"] = consts.LOSE_STATE
+        state["object_hitted"]=consts.GUARD
 
 
 def main():
@@ -92,7 +93,7 @@ def main():
                 is_third_loop += 1
             game_field.fix_field(field, field_copy)
             check_if_guard_hit(field)
-        screen.draw_game(state, field, field_copy)
+
         start_count = event_handler(field, start_count, tp_list)
         screen.draw_game(state, field, field_copy)
         # load and save ==================
@@ -107,6 +108,7 @@ def main():
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             time.sleep(consts.LOAD_GAME_MSG_TIME)
         # =============================
+
 
         if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)

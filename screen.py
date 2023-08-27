@@ -101,8 +101,9 @@ def draw_image(obj_info, field):
 
 def draw_dead(field,state):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
+    print(state["object_hitted"])
     for i in range(len(photos)):
-        if not (state["object_hitted"]==consts.GUARD and i==0):
+        if not(state["object_hitted"] == consts.GUARD and i==0):
             draw_image([photos[i],consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],field)
 
 

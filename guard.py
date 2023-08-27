@@ -82,8 +82,5 @@ def move_guard_left(field, guard_position):
 # return: Guard status
 # this function update the guard status
 def update_guard_status(state, field, direction):
-    # if isHitSolider(field, get_guard_position(field), direction):
-    #     state["state"] = consts.LOSE_STATE
-    #     return
     state["guard_Direction"] = move_guard(field, direction)
-    state["object_hitted"]=consts.GUARD
+
