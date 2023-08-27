@@ -33,12 +33,6 @@ def check_soldier_status(field, tp_list):
         state["state"] = consts.RUNNING_STATE
     elif state["player_status"] == consts.SOLDIER_GUARD_HIT:
         state["state"] = consts.LOSE_STATE
-    "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE
-
-
-}
-
-
 
 
 
@@ -89,7 +83,7 @@ def fix_field(field, field_copy):
             if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
                 continue
             #check for the gaurd too
-            if row ==
+           # if row ==
             if not field[row][col] == consts.SOLDIER:
                 field[row][col] = field_copy[row][col]
             if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
@@ -109,7 +103,7 @@ def main():
         if state["state"] == consts.RUNNING_STATE:
             guard.move_guard(field, state["guard_Direction"])
             fix_field(field, field_copy)
-        screen.draw_game(state, field)
+        screen.draw_game(state, field, field_copy)
         start_count = event_handler(field, start_count,tp_list)
         game_field.fix_field(field, field_copy)
         screen.draw_game(state, field,field_copy)
