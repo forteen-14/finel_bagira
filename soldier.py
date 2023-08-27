@@ -116,6 +116,7 @@ def up(field):
         if 0 <= i[0] - 1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
                 if next_position_info == consts.MINE:
+
                     return consts.SOLDIER_MINE_HIT
                 if next_position_info == consts.TELEPORT:
                     return consts.SOLDIER_TELEPORT

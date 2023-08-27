@@ -106,7 +106,9 @@ def main():
             rest_load_and_save()
         # =============================
 
-
+        if state["state"] == consts.SPACE_X_RAY:
+            state["state"] = consts.RUNNING_STATE
+            time.sleep(consts.X_RAY_TIME)
         if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)

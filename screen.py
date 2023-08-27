@@ -158,8 +158,7 @@ def draw_game(state, field, main_field):
 
     if state["state"] == consts.SPACE_X_RAY:
         x_ray(field, main_field)
-        time.sleep(consts.X_RAY_TIME)
-        state["state"] = consts.RUNNING_STATE
+
 
     # ============================= states
     if state["state"] == consts.LOSE_STATE:
@@ -180,3 +179,6 @@ def draw_game(state, field, main_field):
 
 
     pygame.display.flip()
+
+
+
