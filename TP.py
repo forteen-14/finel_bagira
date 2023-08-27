@@ -3,7 +3,9 @@ import random
 import pygame
 import soldier
 
-
+# parameters: field, random_tp
+# return: True if the soldier can teleport, False otherwise
+# this function checks if the soldier can teleport
 def check_if_can_teleport(field, random_tp):
     soldier_position = soldier.get_soldier_position(field)
     for i in soldier_position:
@@ -16,6 +18,9 @@ def check_if_can_teleport(field, random_tp):
             return False
 
 
+# parameters: field, tp_list
+# return: None
+# this function teleport the soldier to a random place
 def teleport_the_player(field, tp_list):
     while True:
         is_good_place = random_tp = random.choice(tp_list)
