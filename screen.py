@@ -74,7 +74,7 @@ def draw_load_game(game_number):
 
 
 def draw_save_game(game_number):
-    print(game_number)
+
     draw_message(
         consts.SAVE_GAME_MESSAFE + str(game_number),
         consts.LOAD_MSG_FONT,
@@ -102,7 +102,7 @@ def draw_image(obj_info, field):
 
 def draw_dead(field,state):
     photos=[pygame.image.load(consts.BANG_PATH),pygame.image.load(consts.SOLDIER_DEATH_PATH)]
-    print(state["object_hitted"])
+
     for i in range(len(photos)):
         if not(state["object_hitted"] == consts.GUARD and i==0):
             draw_image([photos[i],consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],field)
@@ -142,7 +142,7 @@ def x_ray(field, main_field):
     drawGrid()
     print_by_category(x_ray_object,field,main_field)
     print_by_category(always_visible,field,main_field)
-    time.sleep(consts.X_RAY_TIME)
+
 
 
 def draw_game(state, field, main_field):
@@ -158,6 +158,7 @@ def draw_game(state, field, main_field):
 
     if state["state"] == consts.SPACE_X_RAY:
         x_ray(field, main_field)
+        time.sleep(consts.X_RAY_TIME)
         state["state"] = consts.RUNNING_STATE
 
     # ============================= states

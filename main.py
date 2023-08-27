@@ -48,7 +48,7 @@ def event_handler(field, start_count, tp_list):
             if (
                 event.unicode.isdigit() and event.type == pygame.KEYDOWN
             ):  # if the key is a number
-                print("number pressed")
+
                 start_count = pygame.time.get_ticks()
                 return start_count
             if event.type == pygame.KEYUP:
@@ -57,23 +57,23 @@ def event_handler(field, start_count, tp_list):
                     if space_end - start_count >= consts.SAVE_PRESS_TIME:
                         state["is_key_load"] = consts.SAVE_STATE
                         state["what_number_pressed"] = event.unicode
-                        print("save")
+
                     else:
                         state["is_key_load"] = consts.LOAD_STATE
                         state["what_number_pressed"] = event.unicode
-                        print("load")
+
 
             elif state["state"] != consts.RUNNING_STATE:
                 continue
     return start_count
 
 
-def check_if_guard_hit(field):
-    if len(soldier.get_soldier_position(field)) < consts.SOLDIER_PIXALES:
-        state["state"] = consts.LOSE_STATE
-        state["object_hitted"]=consts.GUARD
 
 
+def rest_load_and_save():
+    state["is_key_load"] = consts.NEUTRAL_STATE
+    state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
+    time.sleep(consts.LOAD_GAME_MSG_TIME)
 def main():
     tp_list = []
     is_third_loop = 0
@@ -82,9 +82,10 @@ def main():
     pygame.init()
     field = game_field.create_field(tp_list)
     field_copy = copy.deepcopy(field)
-    game_field.print_field(field)
+
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list)
+
         if state["state"] == consts.RUNNING_STATE:
             if is_third_loop == consts.GUARD_SLOW_SPEED:
                 guard.update_guard_status(state, field, state["guard_Direction"])
@@ -92,21 +93,17 @@ def main():
             else:
                 is_third_loop += 1
             game_field.fix_field(field, field_copy)
-            check_if_guard_hit(field)
+            soldier.check_if_suldier_guard_hit(field,state)
 
 
         screen.draw_game(state, field, field_copy)
         # load and save ==================
         if state["is_key_load"] == consts.LOAD_STATE:
             field, field_copy = DataBase.loadGame(state["what_number_pressed"])
-            state["is_key_load"] = consts.NEUTRAL_STATE
-            state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
-            time.sleep(consts.LOAD_GAME_MSG_TIME)
+            rest_load_and_save()
         elif state["is_key_load"] == consts.SAVE_STATE:
             DataBase.SaveGame(state["what_number_pressed"], field, field_copy)
-            state["is_key_load"] = consts.NEUTRAL_STATE
-            state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
-            time.sleep(consts.LOAD_GAME_MSG_TIME)
+            rest_load_and_save()
         # =============================
 
 

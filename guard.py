@@ -50,7 +50,7 @@ def move_guard_right(field, guard_position):
 # return: true if the guard hit the soldier
 # this function check if the guard hit the soldier
 def isHitSolider(field, guard_position, direction):
-    print(*field,sep="\n")
+
     print("\n\n\n")
     step = consts.GUARD_SPEED
     if direction == consts.GUARD_LEFT:

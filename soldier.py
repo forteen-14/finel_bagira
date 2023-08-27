@@ -153,3 +153,8 @@ def check_soldier_status(state, field, tp_list):
     elif state["player_status"] == consts.SOLDIER_GUARD_HIT:
         state["state"] = consts.LOSE_STATE
 
+
+def check_if_suldier_guard_hit(field,state):
+    if len(get_soldier_position(field)) < consts.SOLDIER_PIXALES:
+        state["state"] = consts.LOSE_STATE
+        state["object_hitted"]=consts.GUARD
