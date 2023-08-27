@@ -30,16 +30,16 @@ def event_handler(field, start_count, tp_list):
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.right(field)
+                state["player_status"] = soldier.move(field,consts.RIGHT)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.left(field)
+                state["player_status"] = soldier.move(field,consts.LEFT)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.up(field)
+                state["player_status"] = soldier.move(field,consts.UP)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.down(field)
+                state["player_status"] = soldier.move(field,consts.DOWN)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
@@ -112,6 +112,7 @@ def main():
         if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
+
 
 
 if __name__ == "__main__":

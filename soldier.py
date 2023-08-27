@@ -136,6 +136,52 @@ def up(field):
     return "move"
 
 
+def chose_direction(direct):
+    if direct==consts.LEFT:
+        return (0,-1)
+    elif direct==consts.RIGHT:
+        return (0,1)
+    elif direct==consts.DOWN:
+        return (1,0)
+    elif direct==consts.UP:
+        return (-1,0)
+
+def actual_move(field,soldier_position,pos):
+    new_pos = []
+    for i in range(len(soldier_position)):
+        new_pos.append([soldier_position[i][0] + pos[0], soldier_position[i][1] + pos[1]])
+
+    for i in range(len(soldier_position)):
+        field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
+    for i in range(len(soldier_position)):
+        field[new_pos[i][0]][new_pos[i][1]] = consts.SOLDIER
+def move(field,direction):
+    pos=chose_direction(direction)
+    count = 0
+    soldier_position = get_soldier_position(field)
+
+    for i in soldier_position:
+        next_position_info = field[i[0] + pos[0]][i[1]+pos[1]]
+        if 0 <= i[0] + pos[0] < consts.BOARD_GRID_ROW and 0 <= i[1]+pos[1] < consts.BOARD_GRID_COLS:
+            if count >= 6:
+                if next_position_info == consts.MINE:
+                    return consts.SOLDIER_MINE_HIT
+                if next_position_info == consts.TELEPORT:
+                    return consts.SOLDIER_TELEPORT
+            if count < 6:
+                if next_position_info == consts.FLAG:
+                    return consts.SOLDIER_FLAG_HIT
+            if next_position_info == consts.GUARD:
+                return consts.SOLDIER_GUARD_HIT
+        else:
+            return "out of bounds"
+        count += 1
+
+    # go in reverse order to not change the position of the soldier
+    actual_move(field,soldier_position,pos)
+    return "move"
+
+
 # parameters: state, field, tp_list
 # return: None
 # this function checks the status of the soldier and change the state accordingly
