@@ -1,7 +1,7 @@
 import consts
 import random
 
-mobs=[consts.SOLDIER,consts.GUARD]
+mobs = [consts.SOLDIER, consts.GUARD]
 
 # parameters: field and field_copy
 # return: None
@@ -12,10 +12,9 @@ def fix_field(field, field_copy):
             if field[row][col] in mobs:
                 continue
             else:
-                field[row][ col] = field_copy[row][col]
-            if field[row][col]==consts.SOLDIER:
-                field[row][col]=consts.EMPTY
-
+                field[row][col] = field_copy[row][col]
+            if field[row][col] == consts.SOLDIER:
+                field[row][col] = consts.EMPTY
 
 
 # parameters: field
@@ -28,7 +27,9 @@ def create_characters(field):
             field[row][col] = consts.SOLDIER
     for row in range(4):
         for col in range(3):
-            field[consts.BOARD_GRID_ROW - row - 1][consts.BOARD_GRID_COLS - col - 1] = consts.FLAG
+            field[consts.BOARD_GRID_ROW - row - 1][
+                consts.BOARD_GRID_COLS - col - 1
+            ] = consts.FLAG
 
 
 # parameters: field
@@ -56,8 +57,11 @@ def create_mines(field):
             # mines take 3 spots in a row
             row = random.randint(0, consts.BOARD_GRID_ROW - 1)
             col = random.randint(0, consts.BOARD_GRID_COLS - 3)
-            if field[row][col] == consts.EMPTY and field[row][col + 1] == consts.EMPTY and field[row][
-                col + 2] == consts.EMPTY:
+            if (
+                field[row][col] == consts.EMPTY
+                and field[row][col + 1] == consts.EMPTY
+                and field[row][col + 2] == consts.EMPTY
+            ):
                 field[row][col] = consts.MINE
                 field[row][col + 1] = consts.MINE
                 field[row][col + 2] = consts.MINE
@@ -74,8 +78,11 @@ def create_teleports(field, tp_list):
         while True:
             row = random.randint(4, consts.BOARD_GRID_ROW - 4)
             col = random.randint(4, consts.BOARD_GRID_COLS - 20)
-            if field[row][col] == consts.EMPTY and field[row][col + 1] == consts.EMPTY and field[row][
-                col + 2] == consts.EMPTY:
+            if (
+                field[row][col] == consts.EMPTY
+                and field[row][col + 1] == consts.EMPTY
+                and field[row][col + 2] == consts.EMPTY
+            ):
                 field[row][col] = consts.TELEPORT
                 field[row][col + 1] = consts.TELEPORT
                 field[row][col + 2] = consts.TELEPORT
@@ -90,7 +97,9 @@ def create_guard(field):
     # put the guard in the GUARD_START_POINT
     for row in range(consts.GUARD_HIGHT):
         for col in range(consts.GUARD_WIDTH):
-            field[consts.GUARD_START_POINT[0] + row][consts.GUARD_START_POINT[1] + col] = consts.GUARD
+            field[consts.GUARD_START_POINT[0] + row][
+                consts.GUARD_START_POINT[1] + col
+            ] = consts.GUARD
 
 
 # parameters: field
@@ -106,7 +115,10 @@ def print_field(field):
 # this function crate the tp_list
 def create_field(tp_list):
     # create the field 2d list
-    game_filed = [[consts.EMPTY for col in range(consts.BOARD_GRID_COLS)] for row in range(consts.BOARD_GRID_ROW)]
+    game_filed = [
+        [consts.EMPTY for col in range(consts.BOARD_GRID_COLS)]
+        for row in range(consts.BOARD_GRID_ROW)
+    ]
     create_characters(game_filed)
     create_guard(game_filed)
     create_mines(game_filed)

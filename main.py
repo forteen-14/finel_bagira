@@ -15,36 +15,33 @@ state = {
     "is_window_open": True,
     "is_key_load": consts.NEUTRAL_STATE,
     "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE,
-    "guard_Direction": consts.GUARD_RIGHT
+    "guard_Direction": consts.GUARD_RIGHT,
 }
 
 
-
-
-
-
-
-def event_handler(field, start_count,tp_list):
+def event_handler(field, start_count, tp_list):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.right(field)
-                soldier.check_soldier_status(state,field,tp_list)
+                soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.left(field)
-                soldier.check_soldier_status(state,field,tp_list)
+                soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.up(field)
-                soldier.check_soldier_status(state,field,tp_list)
+                soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.down(field)
-                soldier.check_soldier_status(state,field,tp_list)
+                soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
                 state["state"] = consts.SPACE_X_RAY
-            if event.unicode.isdigit() and event.type == pygame.KEYDOWN : # if the key is a number
+            if (
+                event.unicode.isdigit() and event.type == pygame.KEYDOWN
+            ):  # if the key is a number
                 print("number pressed")
                 start_count = pygame.time.get_ticks()
                 return start_count
@@ -68,13 +65,55 @@ def event_handler(field, start_count,tp_list):
 def fix_field(field, field_copy):
     for row in range(len(field)):
         for col in range(len(field[row])):
-            if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
+            if (
+                row == 0
+                and col == 0
+                or row == 0
+                and col == 1
+                or row == 1
+                and col == 0
+                or row == 1
+                and col == 1
+                or row == 2
+                and col == 0
+                or row == 2
+                and col == 1
+                or row == 3
+                and col == 0
+                or row == 3
+                and col == 1
+                or row == 0
+            ):
                 continue
-            if row == 10 and col == 0 or row == 10 and col == 1 or row == 11 and col == 0 or row == 11 and col == 1 or row == 12 and col == 0 or row == 12 and col == 1 or row == 13 and col == 0 or row == 13 and col == 1:
+            if (
+                row == 10
+                and col == 0
+                or row == 10
+                and col == 1
+                or row == 11
+                and col == 0
+                or row == 11
+                and col == 1
+                or row == 12
+                and col == 0
+                or row == 12
+                and col == 1
+                or row == 13
+                and col == 0
+                or row == 13
+                and col == 1
+            ):
                 continue
-            if not field[row][col] == consts.SOLDIER and not field[row][col] == consts.GUARD:
+            if (
+                not field[row][col] == consts.SOLDIER
+                and not field[row][col] == consts.GUARD
+            ):
                 field[row][col] = field_copy[row][col]
-            elif field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG and field[row][col] == consts.GUARD:
+            elif (
+                field[row][col] == consts.SOLDIER
+                and field_copy[row][col] == consts.FLAG
+                and field[row][col] == consts.GUARD
+            ):
                 field[row][col] = field_copy[row][col]
 
 
@@ -91,32 +130,31 @@ def main():
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
             if is_third_loop == 3:
-                guard.update_guard_status(state,field,state["guard_Direction"])
+                guard.update_guard_status(state, field, state["guard_Direction"])
                 is_third_loop = 0
             else:
                 is_third_loop += 1
             fix_field(field, field_copy)
         screen.draw_game(state, field, field_copy)
-        start_count = event_handler(field, start_count,tp_list)
-        screen.draw_game(state, field,field_copy)
-       # load and save ==================
-        if state["is_key_load"]==consts.LOAD_STATE:
-            field,field_copy=DataBase.loadGame(state["what_number_pressed"])
+        start_count = event_handler(field, start_count, tp_list)
+        screen.draw_game(state, field, field_copy)
+        # load and save ==================
+        if state["is_key_load"] == consts.LOAD_STATE:
+            field, field_copy = DataBase.loadGame(state["what_number_pressed"])
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             time.sleep(consts.LOAD_GAME_MSG_TIME)
-        elif state["is_key_load"]==consts.SAVE_STATE:
-            DataBase.SaveGame(state["what_number_pressed"],field,field_copy)
+        elif state["is_key_load"] == consts.SAVE_STATE:
+            DataBase.SaveGame(state["what_number_pressed"], field, field_copy)
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
             time.sleep(consts.LOAD_GAME_MSG_TIME)
-        #=============================
+        # =============================
 
-
-        if state["state"]==consts.WIN_STATE or state["state"]==consts.LOSE_STATE:
+        if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

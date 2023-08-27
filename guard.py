@@ -1,6 +1,9 @@
 import consts
 
 
+# parameters: field
+# return: a list of the guard position in the field
+# this function return a list of the guard position in the field
 def get_guard_position(field):
     gaurd_index_list = []
     for row in range(len(field)):
@@ -10,6 +13,9 @@ def get_guard_position(field):
     return gaurd_index_list
 
 
+# parameters: field, direction
+# return: the direction of the guard
+# this function move the guard in the field
 def move_guard(field, direction):
     guard_position = get_guard_position(field)
     if direction == consts.GUARD_RIGHT:
@@ -21,42 +27,59 @@ def move_guard(field, direction):
     return direction
 
 
-
+# parameters: field, guard_position
+# return: if the guard is out of bounds
+# this function move the guard to the right
 def move_guard_right(field, guard_position):
-
     for i in guard_position:
-        next_position_info = field[i[0]][i[1]+1]
-        if 0 <= i[0] < consts.BOARD_GRID_ROW-consts.GUARD_SPEED and 0 <= i[1] + consts.GUARD_SPEED < consts.BOARD_GRID_COLS-consts.GUARD_SPEED:
+        next_position_info = field[i[0]][i[1] + 1]
+        if (
+            0 <= i[0] < consts.BOARD_GRID_ROW - consts.GUARD_SPEED
+            and 0
+            <= i[1] + consts.GUARD_SPEED
+            < consts.BOARD_GRID_COLS - consts.GUARD_SPEED
+        ):
             field[i[0]][i[1] + consts.GUARD_SPEED] = consts.GUARD
             field[i[0]][i[1]] = consts.EMPTY
         else:
             return consts.SOLDIER_OUT_OF_BOUNDS
 
-def isHitSolider(field, guard_position,direction):
-    step=1
-    if direction==consts.GUARD_LEFT:
-        step=-1
+
+# parameters: field, guard_position
+# return: true if the guard hit the soldier
+# this function check if the guard hit the soldier
+def isHitSolider(field, guard_position, direction):
+    step = 1
+    if direction == consts.GUARD_LEFT:
+        step = -1
     for position in guard_position:
-        if field[position[0]][position[1]+step]==consts.SOLDIER:
+        if field[position[0]][position[1] + step] == consts.SOLDIER:
             return True
         return False
 
 
-
-
-
+# parameters: field, guard_position
+# return: if the guard is out of bounds
+# this function move the guard to the left
 def move_guard_left(field, guard_position):
     for i in guard_position:
-        next_position_info = field[i[0]][i[1]-1]
-        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] - consts.GUARD_SPEED < consts.BOARD_GRID_COLS:
+        next_position_info = field[i[0]][i[1] - 1]
+        if (
+            0 <= i[0] < consts.BOARD_GRID_ROW
+            and 0 <= i[1] - consts.GUARD_SPEED < consts.BOARD_GRID_COLS
+        ):
             field[i[0]][i[1] - consts.GUARD_SPEED] = consts.GUARD
         else:
             return consts.SOLDIER_OUT_OF_BOUNDS
     for i in guard_position:
         field[i[0]][i[1]] = consts.EMPTY
 
-def update_guard_status(state,field,direction):
-    if isHitSolider(field,get_guard_position(field),direction):
-        state["state"]=consts.LOSE_STATE
+
+# parameters: state, field, direction
+# return: Guard status
+# this function update the guard status
+def update_guard_status(state, field, direction):
+    if isHitSolider(field, get_guard_position(field), direction):
+        state["state"] = consts.LOSE_STATE
         return
-    state["guard_Direction"]=move_guard(field,direction)
+    state["guard_Direction"] = move_guard(field, direction)
