@@ -129,3 +129,5 @@ def check_soldier_status(state,field,tp_list):
         state["state"] = consts.RUNNING_STATE
     elif state["player_status"] == consts.SOLDIER_MOVE:
         state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_GUARD_HIT:
+        state["state"] = consts.LOSE_STATE

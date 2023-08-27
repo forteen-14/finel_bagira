@@ -1,15 +1,17 @@
 import consts
 import random
 
+mobs=[consts.SOLDIER,consts.GUARD]
 def fix_field(field, field_copy):
     for row in range(len(field)):
         for col in range(len(field[row])):
-            if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
+            if field[row][col] in mobs:
                 continue
-            if not field[row][col] == consts.SOLDIER:
+            else:
                 field[row][col] = field_copy[row][col]
-            if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
-                field[row][col] = field_copy[row][col]
+            if field[row][col]==consts.SOLDIER:
+                field[row][col]=consts.EMPTY
+
 
 def create_characters(field):
     # make the soldier take 2X4 spots in the top left and the flag 3X4 in the bottom right

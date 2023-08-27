@@ -13,7 +13,7 @@ objects={
          "snake": [pygame.image.load(consts.SNAKE_PATH),consts.SOLDIER_SIZE,6,consts.SOLDIER_PIXALES]
          }
 
-x_ray_object=[consts.SHOW_ON_XRAY,"night_soldier"]
+x_ray_object=["mine","night_soldier"]
 mobs=["soldier","night_soldier","snake"]
 
 
