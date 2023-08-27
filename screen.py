@@ -35,7 +35,7 @@ objects = {
         consts.SOLDIER,
         consts.SOLDIER_PIXALES,
     ],
-    "snake": [
+    "guard": [
         pygame.image.load(consts.SNAKE_PATH),
         consts.SOLDIER_SIZE,
         6,
@@ -44,7 +44,8 @@ objects = {
 }
 
 x_ray_object = ["mine", "night_soldier"]
-mobs = ["soldier", "night_soldier", "snake"]
+always_visible=["flag","guard"]
+mobs = ["soldier", "night_soldier", "guard"]
 
 
 
@@ -131,16 +132,16 @@ def drawGrid():
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
-
-def x_ray(field, main_field):
-    drawGrid()
-    for name in x_ray_object:
+def print_by_category(category,field,main_field):
+    for name in category:
         if name in mobs:
             draw_image(objects[name], field)
         else:
             draw_image(objects[name], main_field)
-
-    draw_image(objects["flag"], field)
+def x_ray(field, main_field):
+    drawGrid()
+    print_by_category(x_ray_object,field,main_field)
+    print_by_category(always_visible,field,main_field)
     time.sleep(consts.X_RAY_TIME)
 
 

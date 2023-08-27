@@ -86,7 +86,7 @@ def main():
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
-            if is_third_loop == 3:
+            if is_third_loop == consts.GUARD_SLOW_SPEED:
                 guard.update_guard_status(state, field, state["guard_Direction"])
                 is_third_loop = 0
             else:
@@ -94,7 +94,7 @@ def main():
             game_field.fix_field(field, field_copy)
             check_if_guard_hit(field)
 
-        start_count = event_handler(field, start_count, tp_list)
+
         screen.draw_game(state, field, field_copy)
         # load and save ==================
         if state["is_key_load"] == consts.LOAD_STATE:
