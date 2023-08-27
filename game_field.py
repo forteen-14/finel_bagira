@@ -1,6 +1,15 @@
 import consts
 import random
 
+def fix_field(field, field_copy):
+    for row in range(len(field)):
+        for col in range(len(field[row])):
+            if row == 0 and col == 0 or row == 0 and col == 1 or row == 1 and col == 0 or row == 1 and col == 1 or row == 2 and col == 0 or row == 2 and col == 1 or row == 3 and col == 0 or row == 3 and col == 1 or row == 0:
+                continue
+            if not field[row][col] == consts.SOLDIER:
+                field[row][col] = field_copy[row][col]
+            if field[row][col] == consts.SOLDIER and field_copy[row][col] == consts.FLAG:
+                field[row][col] = field_copy[row][col]
 
 def create_characters(field):
     # make the soldier take 2X4 spots in the top left and the flag 3X4 in the bottom right
@@ -44,7 +53,7 @@ def create_teleports(field, tp_list):
     for i in range(consts.TELEPORT_AMOUNT):
         # teleports take 3 spots in a row and it can only be between 4-20 rows
         while True:
-            row = random.randint(4, consts.BOARD_GRID_ROW - 1)
+            row = random.randint(4, consts.BOARD_GRID_ROW - 4)
             col = random.randint(4, consts.BOARD_GRID_COLS - 20)
             if field[row][col] == consts.EMPTY and field[row][col + 1] == consts.EMPTY and field[row][
                 col + 2] == consts.EMPTY:

@@ -4,6 +4,9 @@ import os
 
 df = pd.DataFrame()
 
+
+def isKeyExist(key):
+    return key in df.keys()
 def DataBase():
     global df
     if os.path.exists(f'./{consts.DB_NAME_PATH}'):

@@ -4,16 +4,17 @@ import time
 screen = pygame.display.set_mode(
     (consts.WINDOW_WIDTH, consts.WINDOW_HEIGHT))
 
-objects={"soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
+objects={
          "bush":[pygame.image.load(consts.BUSH_PNG_PATH),consts.BUSH_SIZE,consts.GRASS,consts.BUSH_PIXALES],
          "mine":[pygame.image.load(consts.MINE_PNG_PATH),consts.MINE_SIZE,consts.MINE,consts.MINE_PIXALES],
          "flag":[pygame.image.load(consts.FLAG_PNG_PATH),consts.FLAG_SIZE,consts.FLAG,consts.FLAG_PIXALES],
+         "soldier":[pygame.image.load(consts.SOLIDER_PNG_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
          "night_soldier":[pygame.image.load(consts.NIGHT_SOLDIER_PATH),consts.SOLDIER_SIZE,consts.SOLDIER,consts.SOLDIER_PIXALES],
          "snake": [pygame.image.load(consts.SNAKE_PATH),consts.SOLDIER_SIZE,6,consts.SOLDIER_PIXALES]
          }
 
 x_ray_object=[consts.SHOW_ON_XRAY,"night_soldier"]
-
+mobs=["soldier","night_soldier","snake"]
 
 
 
@@ -44,11 +45,17 @@ def draw_image(obj_info,field):
     count_pixales=0
     for row in range(consts.BOARD_GRID_ROW):
         for col in range(consts.BOARD_GRID_COLS):
+            #show tp
+            if field[row][col]==5:
+                pygame.draw.rect(screen,consts.WHITE,[col*consts.BLOCK_SIZE, row*consts.BLOCK_SIZE, consts.BLOCK_SIZE, consts.BLOCK_SIZE])
+
             if field[row][col]==object_index:
                 if count_pixales==0:
                     screen.blit(img, (col * consts.BLOCK_SIZE, row * consts.BLOCK_SIZE))
                     count_pixales=object_pixales
                 count_pixales-=1
+
+
 
 
 def draw_dead(field):
@@ -68,9 +75,7 @@ def draw_win_message():
                  consts.WIN_COLOR, consts.WIN_LOCATION)
 
 
-
-
-def x_ray(field):
+def drawGrid():
     # Set the size of the grid block
     screen.fill(consts.BLACK)
     for x in range(0, consts.WINDOW_WIDTH, consts.BLOCK_SIZE):
@@ -78,26 +83,37 @@ def x_ray(field):
             rect = pygame.Rect(x, y, consts.BLOCK_SIZE, consts.BLOCK_SIZE)
             pygame.draw.rect(screen, consts.GRAY, rect, 1)
 
+def x_ray(field,main_field):
+    drawGrid()
     for name in x_ray_object:
-        draw_image( objects[name], field)
+        if name in mobs:
+            draw_image( objects[name], field)
+        else:
+            draw_image(objects[name], main_field)
+
     draw_image(objects["flag"],field)
     time.sleep(consts.X_RAY_TIME)
 
 
-def draw_game(state,field):
+def draw_game(state,field,main_field):
     screen.fill(consts.BACKGROUND_COLOR)
 
 
     for name,info in objects.items():
         if name not in x_ray_object:
-            draw_image(info,field)
+            if name not in mobs:
+                draw_image(info,main_field)
+            else:
+                draw_image(info, field)
+
+
     if state["state"] == consts.SPACE_X_RAY:
-        x_ray(field)
+        x_ray(field,main_field)
         state["state"] = consts.RUNNING_STATE
 
     #============================= states
     if state["state"] == consts.LOSE_STATE:
-        x_ray(field)
+        x_ray(field,main_field)
         draw_dead(field)
         draw_lose_message()
     elif state["state"] == consts.WIN_STATE:
@@ -109,8 +125,6 @@ def draw_game(state,field):
         draw_load_game(state["what_number_pressed"])
     if state["is_key_load"] == consts.SAVE_STATE:
         draw_save_game(state["what_number_pressed"])
-
-
 
 
 

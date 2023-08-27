@@ -1,6 +1,6 @@
 import consts
 import game_field
-
+import TP
 
 def get_soldier_position(field):
     found_soldier = []
@@ -117,3 +117,15 @@ def up(field):
         field[soldier_position[i][0]-1][soldier_position[i][1]] = consts.SOLDIER
     return "move"
 
+def check_soldier_status(state,field,tp_list):
+    if state["player_status"] == consts.SOLDIER_MINE_HIT:
+        state["state"] = consts.LOSE_STATE
+    elif state["player_status"] == consts.SOLDIER_TELEPORT:
+        TP.teleport_the_player(field, tp_list)
+        state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_FLAG_HIT:
+        state["state"] = consts.WIN_STATE
+    elif state["player_status"] == consts.SOLDIER_OUT_OF_BOUNDS:
+        state["state"] = consts.RUNNING_STATE
+    elif state["player_status"] == consts.SOLDIER_MOVE:
+        state["state"] = consts.RUNNING_STATE

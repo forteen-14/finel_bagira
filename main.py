@@ -33,24 +33,31 @@ def check_soldier_status(field, tp_list):
         state["state"] = consts.RUNNING_STATE
     elif state["player_status"] == consts.SOLDIER_GUARD_HIT:
         state["state"] = consts.LOSE_STATE
+    "what_number_pressed": consts.DEFAULT_KEY_LOAD_AND_SAVE
 
 
-def event_handler(field, start_count, tp_list):
+}
+
+
+
+
+
+def event_handler(field, start_count,tp_list):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.right(field)
-                check_soldier_status(field, tp_list)
+                soldier.check_soldier_status(state,field,tp_list)
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.left(field)
-                check_soldier_status(field, tp_list)
+                soldier.check_soldier_status(state,field,tp_list)
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.up(field)
-                check_soldier_status(field, tp_list)
+                soldier.check_soldier_status(state,field,tp_list)
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.down(field)
-                check_soldier_status(field, tp_list)
+                soldier.check_soldier_status(state,field,tp_list)
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
@@ -62,7 +69,7 @@ def event_handler(field, start_count, tp_list):
             if event.type == pygame.KEYUP:
                 if event.unicode.isdigit():
                     space_end = pygame.time.get_ticks()
-                    if space_end - start_count >= 1000:
+                    if space_end - start_count >= consts.SAVE_PRESS_TIME:
                         state["is_key_load"] = consts.SAVE_STATE
                         state["what_number_pressed"] = event.unicode
                         print("save")
@@ -103,6 +110,9 @@ def main():
             guard.move_guard(field, state["guard_Direction"])
             fix_field(field, field_copy)
         screen.draw_game(state, field)
+        start_count = event_handler(field, start_count,tp_list)
+        game_field.fix_field(field, field_copy)
+        screen.draw_game(state, field,field_copy)
 
        # load and save ==================
         if state["is_key_load"]==consts.LOAD_STATE:
