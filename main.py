@@ -68,7 +68,9 @@ def event_handler(field, start_count, tp_list):
     return start_count
 
 
-
+def check_if_guard_hit(field):
+    if len(soldier.get_soldier_position(field)) < consts.SOLDIER_PIXALES:
+        state["state"] = consts.LOSE_STATE
 
 
 def main():
@@ -89,6 +91,7 @@ def main():
             else:
                 is_third_loop += 1
             game_field.fix_field(field, field_copy)
+            check_if_guard_hit(field)
         screen.draw_game(state, field, field_copy)
         start_count = event_handler(field, start_count, tp_list)
         screen.draw_game(state, field, field_copy)
