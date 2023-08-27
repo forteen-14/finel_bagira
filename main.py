@@ -31,16 +31,16 @@ def event_handler(field, start_count, tp_list):
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.right(field)
-                soldier.check_soldier_status(state, field, tp_list)
+
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.left(field)
-                soldier.check_soldier_status(state, field, tp_list)
+
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.up(field)
-                soldier.check_soldier_status(state, field, tp_list)
+
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
                 state["player_status"] = soldier.down(field)
-                soldier.check_soldier_status(state, field, tp_list)
+
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
             if event.key == pygame.K_SPACE:
@@ -82,16 +82,18 @@ def main():
     game_field.print_field(field)
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list)
+        soldier.check_soldier_status(state, field, tp_list)
         if state["state"] == consts.RUNNING_STATE:
-            if is_third_loop == 3:
-                guard.update_guard_status(state, field, state["guard_Direction"])
-                is_third_loop = 0
-            else:
-                is_third_loop += 1
             game_field.fix_field(field, field_copy)
-        screen.draw_game(state, field, field_copy)
-        start_count = event_handler(field, start_count, tp_list)
-        screen.draw_game(state, field, field_copy)
+
+
+        # =============================
+        if is_third_loop == 3:
+            guard.update_guard_status(state, field, state["guard_Direction"])
+            is_third_loop = 0
+        else:
+            is_third_loop += 1
+
         # load and save ==================
         if state["is_key_load"] == consts.LOAD_STATE:
             field, field_copy = DataBase.loadGame(state["what_number_pressed"])
@@ -102,9 +104,10 @@ def main():
             DataBase.SaveGame(state["what_number_pressed"], field, field_copy)
             state["is_key_load"] = consts.NEUTRAL_STATE
             state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
-            time.sleep(consts.LOAD_GAME_MSG_TIME)
-        # =============================
 
+            time.sleep(consts.LOAD_GAME_MSG_TIME)
+
+        screen.draw_game(state, field, field_copy)
         if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
