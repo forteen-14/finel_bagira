@@ -91,7 +91,7 @@ def main():
         start_count = event_handler(field, start_count, tp_list)
         if state["state"] == consts.RUNNING_STATE:
             if is_third_loop == 3:
-                guard.move_guard(field, state["guard_Direction"])
+                state["guard_Direction"] = guard.move_guard(field, state["guard_Direction"])
                 is_third_loop = 0
             else:
                 is_third_loop += 1

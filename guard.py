@@ -18,13 +18,14 @@ def move_guard(field, direction):
     if direction == consts.GUARD_LEFT:
         if move_guard_left(field, guard_position) == consts.SOLDIER_OUT_OF_BOUNDS:
             direction = consts.GUARD_RIGHT
+    return direction
 
 
 def move_guard_right(field, guard_position):
     print(guard_position[0][0], guard_position[0][1] + consts.GUARD_SPEED)
     for i in guard_position:
         next_position_info = field[i[0]][i[1]+1]
-        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] + consts.GUARD_SPEED < consts.BOARD_GRID_COLS:
+        if 0 <= i[0] < consts.BOARD_GRID_ROW-consts.GUARD_SPEED and 0 <= i[1] + consts.GUARD_SPEED < consts.BOARD_GRID_COLS-consts.GUARD_SPEED:
             field[i[0]][i[1] + consts.GUARD_SPEED] = consts.GUARD
             field[i[0]][i[1]] = consts.EMPTY
         else:
