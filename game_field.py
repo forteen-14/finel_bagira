@@ -20,19 +20,19 @@ def fix_field(field, field_copy):
 
 
 
-# parameters: field
-# return: None
-# this function create the soldier in the field
-def create_characters(field):
+def create_soldier(field):
     # make the soldier take 2X4 spots in the top left and the flag 3X4 in the bottom right
     for row in range(4):
         for col in range(2):
             field[row][col] = consts.SOLDIER
+def create_flag(field):
     for row in range(4):
         for col in range(3):
             field[consts.BOARD_GRID_ROW - row - 1][
                 consts.BOARD_GRID_COLS - col - 1
-            ] = consts.FLAG
+                ] = consts.FLAG
+
+
 
 
 # parameters: field
@@ -122,7 +122,8 @@ def create_field(tp_list):
         [consts.EMPTY for col in range(consts.BOARD_GRID_COLS)]
         for row in range(consts.BOARD_GRID_ROW)
     ]
-    create_characters(game_filed)
+    create_soldier(game_filed)
+    create_flag(game_filed)
     create_guard(game_filed)
     create_mines(game_filed)
     create_teleports(game_filed, tp_list)

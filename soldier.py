@@ -17,123 +17,6 @@ def get_soldier_position(field):
     return found_soldier
 
 
-# parameters: field
-# return: the status of the soldier
-# this function return the status of the soldier after he moved and makes the move one step to the right
-def right(field):
-    count = 0
-    soldier_position = get_soldier_position(field)
-    for i in soldier_position:
-        next_position_info = field[i[0]][i[1] + 1]
-        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] + 1 < consts.BOARD_GRID_COLS:
-            if count >= 6:
-                if next_position_info == consts.MINE:
-                    return consts.SOLDIER_MINE_HIT
-                if next_position_info == consts.TELEPORT:
-                    return consts.SOLDIER_TELEPORT
-            if count < 6:
-                if next_position_info == consts.FLAG:
-                    return consts.SOLDIER_FLAG_HIT
-            if next_position_info == consts.GUARD:
-                return consts.SOLDIER_GUARD_HIT
-        else:
-            return "out of bounds"
-        count += 1
-
-    for i in range(0, len(soldier_position), 2):
-        field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
-        field[soldier_position[i][0]][soldier_position[i][1] + 2] = consts.SOLDIER
-    return "move"
-
-
-# parameters: field
-# return: the status of the soldier
-# this function return the status of the soldier after he moved and makes the move one step to the left
-def left(field):
-    count = 0
-    soldier_position = get_soldier_position(field)
-    for i in soldier_position:
-        next_position_info = field[i[0]][i[1] - 1]
-        if 0 <= i[0] < consts.BOARD_GRID_ROW and 0 <= i[1] - 1 < consts.BOARD_GRID_COLS:
-            if count >= 6:
-                if next_position_info == consts.MINE:
-                    return consts.SOLDIER_MINE_HIT
-                if next_position_info == consts.TELEPORT:
-                    return consts.SOLDIER_TELEPORT
-            if count < 6:
-                if next_position_info == consts.FLAG:
-                    return consts.SOLDIER_FLAG_HIT
-            if next_position_info == consts.GUARD:
-                return consts.SOLDIER_GUARD_HIT
-        else:
-            return "out of bounds"
-        count += 1
-
-    for i in range(1, len(soldier_position), 2):
-        field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
-        field[soldier_position[i][0]][soldier_position[i][1] - 2] = consts.SOLDIER
-    return "move"
-
-
-# parameters: field
-# return: the status of the soldier
-# this function return the status of the soldier after he moved and makes the move one step down
-def down(field):
-    count = 0
-    soldier_position = get_soldier_position(field)
-    for i in soldier_position:
-        next_position_info = field[i[0] + 1][i[1]]
-        if 0 <= i[0] + 1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
-            if count >= 6:
-                if next_position_info == consts.MINE:
-                    return consts.SOLDIER_MINE_HIT
-                if next_position_info == consts.TELEPORT:
-                    return consts.SOLDIER_TELEPORT
-            if count < 6:
-                if next_position_info == consts.FLAG:
-                    return consts.SOLDIER_FLAG_HIT
-            if next_position_info == consts.GUARD:
-                return consts.SOLDIER_GUARD_HIT
-        else:
-            return "out of bounds"
-        count += 1
-
-    # go in reverse order to not change the position of the soldier
-    for i in range(len(soldier_position) - 1, -1, -1):
-        field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
-        field[soldier_position[i][0] + 1][soldier_position[i][1]] = consts.SOLDIER
-    return "move"
-
-
-# parameters: field
-# return: the status of the soldier
-# this function return the status of the soldier after he moved and makes the move one step up
-def up(field):
-    count = 0
-    soldier_position = get_soldier_position(field)
-    for i in soldier_position:
-        next_position_info = field[i[0] + 1][i[1]]
-        if 0 <= i[0] - 1 < consts.BOARD_GRID_ROW and 0 <= i[1] < consts.BOARD_GRID_COLS:
-            if count >= 6:
-                if next_position_info == consts.MINE:
-
-                    return consts.SOLDIER_MINE_HIT
-                if next_position_info == consts.TELEPORT:
-                    return consts.SOLDIER_TELEPORT
-            if count < 6:
-                if next_position_info == consts.FLAG:
-                    return consts.SOLDIER_FLAG_HIT
-            if next_position_info == consts.GUARD:
-
-                return consts.SOLDIER_GUARD_HIT
-        else:
-            return "out of bounds"
-        count += 1
-
-    for i in range(len(soldier_position)):
-        field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
-        field[soldier_position[i][0] - 1][soldier_position[i][1]] = consts.SOLDIER
-    return "move"
 
 
 def chose_direction(direct):
@@ -146,6 +29,7 @@ def chose_direction(direct):
     elif direct==consts.UP:
         return (-1,0)
 
+
 def actual_move(field,soldier_position,pos):
     new_pos = []
     for i in range(len(soldier_position)):
@@ -155,13 +39,15 @@ def actual_move(field,soldier_position,pos):
         field[soldier_position[i][0]][soldier_position[i][1]] = consts.EMPTY
     for i in range(len(soldier_position)):
         field[new_pos[i][0]][new_pos[i][1]] = consts.SOLDIER
-def move(field,direction):
+
+
+def move(field,direction,field_copy):
     pos=chose_direction(direction)
     count = 0
     soldier_position = get_soldier_position(field)
     stat=""
     for i in soldier_position:
-        next_position_info = field[i[0] + pos[0]][i[1]+pos[1]]
+        next_position_info = field_copy[i[0] + pos[0]][i[1]+pos[1]]
         if 0 <= i[0] + pos[0] < consts.BOARD_GRID_ROW and 0 <= i[1]+pos[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
                 if next_position_info == consts.MINE:
@@ -178,14 +64,14 @@ def move(field,direction):
                 stat = consts.SOLDIER_GUARD_HIT
                 break
         else:
-            stat = "out of bounds"
-            break
+            return consts.SOLDIER_OUT_OF_BOUNDS
         count += 1
 
     # go in reverse order to not change the position of the soldier
+
     actual_move(field,soldier_position,pos)
     if stat=="":
-        stat = "move"
+        stat = consts.SOLDIER_MOVE
     return stat
 
 

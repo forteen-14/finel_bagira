@@ -25,21 +25,21 @@ state = {
 
 
 
-def event_handler(field, start_count, tp_list):
+def event_handler(field, start_count, tp_list,field_copy):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.move(field,consts.RIGHT)
+                state["player_status"] = soldier.move(field,consts.RIGHT,field_copy)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_LEFT and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.move(field,consts.LEFT)
+                state["player_status"] = soldier.move(field,consts.LEFT,field_copy)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_UP and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.move(field,consts.UP)
+                state["player_status"] = soldier.move(field,consts.UP,field_copy)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_DOWN and event.type == pygame.KEYDOWN:
-                state["player_status"] = soldier.move(field,consts.DOWN)
+                state["player_status"] = soldier.move(field,consts.DOWN,field_copy)
                 soldier.check_soldier_status(state, field, tp_list)
             if event.key == pygame.K_ESCAPE and event.type == pygame.KEYDOWN:
                 state["is_window_open"] = False
@@ -84,7 +84,7 @@ def main():
     field_copy = copy.deepcopy(field)
 
     while state["is_window_open"]:
-        start_count = event_handler(field, start_count, tp_list)
+        start_count = event_handler(field, start_count, tp_list,field_copy)
 
         if state["state"] == consts.RUNNING_STATE:
             if is_third_loop == consts.GUARD_SLOW_SPEED:
@@ -92,6 +92,8 @@ def main():
                 is_third_loop = 0
             else:
                 is_third_loop += 1
+
+
             game_field.fix_field(field, field_copy)
             soldier.check_if_suldier_guard_hit(field,state)
 
