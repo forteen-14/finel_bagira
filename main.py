@@ -74,6 +74,18 @@ def rest_load_and_save():
     state["is_key_load"] = consts.NEUTRAL_STATE
     state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
     time.sleep(consts.LOAD_GAME_MSG_TIME)
+
+
+def fix_copy_field(field_copy):
+    # make the copy field empty where a soldier and a guard are
+    for i in range(consts.SOLDIER_HIGHT):
+        for j in range(consts.SOLDIER_WIDTH):
+            field_copy[i][j] = consts.EMPTY
+    for i in range(consts.GUARD_HIGHT):
+        for j in range(consts.GUARD_WIDTH):
+            field_copy[i + consts.GUARD_START_POINT[0]][j + consts.GUARD_START_POINT[1]] = consts.EMPTY
+
+
 def main():
     tp_list = []
     is_third_loop = 0
@@ -82,7 +94,7 @@ def main():
     pygame.init()
     field = game_field.create_field(tp_list)
     field_copy = copy.deepcopy(field)
-
+    fix_copy_field(field_copy)
     while state["is_window_open"]:
         start_count = event_handler(field, start_count, tp_list,field_copy)
 
@@ -114,7 +126,6 @@ def main():
         if state["state"] == consts.WIN_STATE or state["state"] == consts.LOSE_STATE:
             time.sleep(consts.TIME_DELAY)
             exit(0)
-
 
 
 if __name__ == "__main__":
