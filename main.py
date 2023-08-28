@@ -24,7 +24,9 @@ state = {
 
 
 
-
+# parameters: field, start_count, tp_list,field_copy
+# return: start_count
+# this function handle the events according to the state
 def event_handler(field, start_count, tp_list,field_copy):
     # Cycles through all the events currently occuring
     for event in pygame.event.get():
@@ -69,13 +71,18 @@ def event_handler(field, start_count, tp_list,field_copy):
 
 
 
-
+# parameters: None
+# return: None
+# this function reset the load and save state
 def rest_load_and_save():
     state["is_key_load"] = consts.NEUTRAL_STATE
     state["what_number_pressed"] = consts.DEFAULT_KEY_LOAD_AND_SAVE
     time.sleep(consts.LOAD_GAME_MSG_TIME)
 
 
+# parameters: field_copy
+# return: None
+# this function fix the copy field
 def fix_copy_field(field_copy):
     # make the copy field empty where a soldier and a guard are
     for i in range(consts.SOLDIER_HIGHT):
