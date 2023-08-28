@@ -159,27 +159,34 @@ def move(field,direction):
     pos=chose_direction(direction)
     count = 0
     soldier_position = get_soldier_position(field)
-
+    stat=""
     for i in soldier_position:
         next_position_info = field[i[0] + pos[0]][i[1]+pos[1]]
         if 0 <= i[0] + pos[0] < consts.BOARD_GRID_ROW and 0 <= i[1]+pos[1] < consts.BOARD_GRID_COLS:
             if count >= 6:
                 if next_position_info == consts.MINE:
-                    return consts.SOLDIER_MINE_HIT
+                    stat = consts.SOLDIER_MINE_HIT
+                    break
                 if next_position_info == consts.TELEPORT:
-                    return consts.SOLDIER_TELEPORT
-            if count < 6:
-                if next_position_info == consts.FLAG:
-                    return consts.SOLDIER_FLAG_HIT
+                    stat = consts.SOLDIER_TELEPORT
+                    break
+
+            if next_position_info == consts.FLAG:
+                stat = consts.SOLDIER_FLAG_HIT
+                break
             if next_position_info == consts.GUARD:
-                return consts.SOLDIER_GUARD_HIT
+                stat = consts.SOLDIER_GUARD_HIT
+                break
         else:
-            return "out of bounds"
+            stat = "out of bounds"
+            break
         count += 1
 
     # go in reverse order to not change the position of the soldier
     actual_move(field,soldier_position,pos)
-    return "move"
+    if stat=="":
+        stat = "move"
+    return stat
 
 
 # parameters: state, field, tp_list
