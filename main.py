@@ -113,7 +113,9 @@ def main():
         screen.draw_game(state, field, field_copy)
         # load and save ==================
         if state["is_key_load"] == consts.LOAD_STATE:
-            field, field_copy = DataBase.loadGame(state["what_number_pressed"])
+            f, f_c = DataBase.loadGame(state["what_number_pressed"])
+            if f!=None and f_c!=None:
+                field, field_copy=f,f_c
             rest_load_and_save()
         elif state["is_key_load"] == consts.SAVE_STATE:
             DataBase.SaveGame(state["what_number_pressed"], field, field_copy)

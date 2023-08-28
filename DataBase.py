@@ -32,4 +32,6 @@ def SaveGame(key_pressed, field, field_copy):
 # return: the key in which the game is saved in the data base
 # this function loads the game from the data base
 def loadGame(key_pressed):
-    return df[key_pressed].values.tolist()
+    if isKeyExist(key_pressed):
+        return df[key_pressed].values.tolist()
+    return None,None
